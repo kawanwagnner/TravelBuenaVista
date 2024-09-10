@@ -65,6 +65,7 @@ section {
 }
 
 /* Estilo para o preloader */
+/* Estilo para o preloader */
 #preloader {
   position: fixed;
   left: 0;
@@ -80,7 +81,7 @@ section {
 
 /* Animação de três pontos */
 .three-body {
-  --uib-size: 35px;
+  --uib-size: 35px; /* Tamanho padrão */
   --uib-speed: 0.8s;
   --uib-color: #5D3FD3;
   position: relative;
@@ -147,37 +148,48 @@ section {
 
 @keyframes spin78236 {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
-
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 @keyframes wobble1 {
   0%, 100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
+    transform: translateY(0%) scale(1);
+    opacity: 1;
   }
-
   50% {
-      transform: translateY(-66%) scale(0.65);
-      opacity: 0.8;
+    transform: translateY(-66%) scale(0.65);
+    opacity: 0.8;
   }
 }
 
 @keyframes wobble2 {
   0%, 100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
+    transform: translateY(0%) scale(1);
+    opacity: 1;
   }
-
   50% {
-      transform: translateY(66%) scale(0.65);
-      opacity: 0.8;
+    transform: translateY(66%) scale(0.65);
+    opacity: 0.8;
   }
 }
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .three-body {
+    --uib-size: 25px; /* Tamanho menor para telas médias */
+  }
+}
+
+@media (max-width: 576px) {
+  .three-body {
+    --uib-size: 20px; /* Tamanho ainda menor para telas pequenas */
+  }
+}
+
 
 /* End PreLoader */
 
