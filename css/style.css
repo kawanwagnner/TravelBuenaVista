@@ -11102,6 +11102,12 @@ h6,
   box-shadow: 0 0 30px #cccccc;
 }
 
+.owl-carousel .owl-item img {
+  display: block;
+  width: 100%;
+  border-radius: 50%;
+}
+
 .blog-item {
   transition: 0.5s;
 }
