@@ -98,7 +98,7 @@ document
     // Simula um atraso para o carregamento (exemplo de 2 segundos)
     setTimeout(() => {
       // Envia os dados para o servidor
-      fetch("http://localhost:3000/send-email/", {
+      fetch("https://tbv-backend.onrender.com/send-email/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
