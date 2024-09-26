@@ -22,7 +22,7 @@
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
+    <!-- CSS -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -33,6 +33,15 @@
             <div class="three-body__dot"></div>
             <div class="three-body__dot"></div>
             <div class="three-body__dot"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="loadingModal" class="loading-modal" style="display: none;">
+        <div class="loading-modal-content">
+            <div id="loaderIcon" class="loader-circle"></div> <!-- Loader padrão que será substituído -->
+            <h2 id="modalTitle">Enviando...</h2>
+            <p id="modalMessage">Por favor, aguarde enquanto processamos sua inscrição.</p>
         </div>
     </div>
 
@@ -617,35 +626,41 @@
                             você aproveitar</li>
                     </ul>
                 </div>
-                <!-- <div class="col-lg-5">
+                <div class="col-lg-5">
                     <div class="card border-0">
                         <div class="card-header bg-primary text-center p-4">
                             <h1 class="text-white m-0">Inscreva-se agora</h1>
                         </div>
                         <div class="card-body rounded-bottom bg-white p-5">
-                            <form>
+                            <form id="contactForm" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <input type="text" class="form-control p-4" placeholder="Seu nome"
+                                    <input type="text" class="form-control p-4" id="nome" placeholder="Seu nome"
                                         required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control p-4" placeholder="Seu email"
+                                    <input type="email" class="form-control p-4" id="email" placeholder="Seu email"
                                         required="required" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control p-4" placeholder="Seu celular"
+                                    <input type="text" class="form-control p-4" id="zap" placeholder="Seu celular"
                                         required="required" />
                                 </div>
-                                <textarea style="max-height: 100px;" class="form-control" id="destination-form" name="destination-form" placeholder="Conte-nos, para onde iria com os descontos?" required></textarea>
+                                <textarea style="max-height: 100px;" class="form-control" id="destination"
+                                    name="destination" placeholder="Conte-nos, para onde iria com os descontos?"
+                                    required></textarea>
+                                <br>
+                                <textarea style="max-height: 100px;" class="form-control" id="quest" name="quest"
+                                    placeholder="Por onde nos encontrou?" required></textarea>
                                 <br>
                                 <div>
                                     <button class="btn btn-primary btn-block py-3" type="submit">Inscreva-se
                                         Agora</button>
                                 </div>
                             </form>
+
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -944,12 +959,9 @@
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
-
-    <!-- Template Javascript -->
+    <!-- Javascript -->
     <script src="js/main.js"></script>
+    <script defer src="js/fetchAPI.js"></script>
 </body>
 
 </html>
