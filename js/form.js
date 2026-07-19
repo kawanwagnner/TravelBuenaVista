@@ -1,37 +1,50 @@
 /**
- * Envio dos formulários de lead (home e contato).
+ * Envio dos formulários de lead (home, contato e preview).
  *
- * Substitui o antigo fetchAPI.js. Diferenças que importam:
- *  - sem atraso artificial antes do fetch;
- *  - checa response.ok (antes, um erro 500 exibia "Sucesso!");
- *  - erro de validação aponta o campo, em vez de sumir em 3 segundos;
- *  - se o envio falhar, oferece o WhatsApp para o lead não se perder.
+ * ┌──────────────────────────────────────────────────────────────────────┐
+ * │ MODO DE ENVIO — mude só a constante MODO abaixo.                     │
+ * │                                                                      │
+ * │   "whatsapp"  (atual) monta uma mensagem com o que a pessoa digitou  │
+ * │               e abre o WhatsApp da agência já preenchido.            │
+ * │   "backend"   volta a enviar por e-mail via API.                     │
+ * │                                                                      │
+ * │ O caminho do backend continua inteiro e testado logo abaixo: trocar  │
+ * │ a constante é tudo o que precisa para religá-lo.                     │
+ * │                                                                      │
+ * │ Por que está em "whatsapp": a API roda em plano gratuito que hiberna │
+ * │ e leva ~30s para acordar no primeiro envio do dia. Pelo WhatsApp a   │
+ * │ conversa começa na hora, e o lead não depende de servidor no ar.     │
+ * └──────────────────────────────────────────────────────────────────────┘
  */
 (function () {
   "use strict";
 
-  var ENDPOINT = "https://tbv-backend.onrender.com/send-email/";
-  var WHATSAPP = "https://contate.me/travelbuenavista";
+  var MODO = "whatsapp"; // "whatsapp" | "backend"
 
-  // O backend hiberna (plano free) e pode levar ~30s para acordar no primeiro
-  // envio do dia. Avisamos o usuário em vez de deixar a tela parada.
+  // Número que recebe os leads, no formato internacional, só dígitos.
+  var WHATSAPP_NUMERO = "5511976732628"; // (11) 97673-2628
+  var WHATSAPP_LINK = "https://contate.me/travelbuenavista";
+
+  var ENDPOINT = "https://tbv-backend.onrender.com/send-email/";
   var AVISO_DEMORA_MS = 6000;
   var TIMEOUT_MS = 45000;
 
   var CAMPOS = [
-    { id: "nome", label: "seu nome" },
-    { id: "email", label: "seu e-mail", email: true },
-    { id: "zap", label: "seu WhatsApp" },
-    { id: "destination", label: "o destino de interesse" },
-    { id: "quest", label: "sua mensagem" }
+    { id: "nome", rotulo: "Nome", label: "seu nome" },
+    { id: "email", rotulo: "E-mail", label: "seu e-mail", email: true },
+    { id: "zap", rotulo: "WhatsApp", label: "seu WhatsApp" },
+    { id: "destination", rotulo: "Destino de interesse", label: "o destino de interesse" },
+    { id: "quest", rotulo: "Mensagem", label: "sua mensagem" }
   ];
+
+  /* ---------------------------------------------------------------- modal */
 
   function getModal() {
     var modal = document.getElementById("loadingModal");
     if (modal) return modal;
 
     // contact.html não tem a marcação do modal; criamos sob demanda para não
-    // duplicar o HTML em duas páginas.
+    // duplicar o HTML em várias páginas.
     modal = document.createElement("div");
     modal.id = "loadingModal";
     modal.className = "loading-modal";
@@ -61,6 +74,8 @@
       }
     };
   }
+
+  /* ----------------------------------------------------------- validação */
 
   function marcarErro(campo, mensagem) {
     campo.classList.add("is-invalid");
@@ -102,30 +117,58 @@
     return { dados: dados, erro: erro };
   }
 
-  function enviar(form) {
-    var modal = Modal();
-    var botao = form.querySelector('[type="submit"]');
-    var textoOriginal = botao ? botao.innerHTML : null;
+  /* ------------------------------------------------------ modo: whatsapp */
 
-    limparErros(form);
-    var resultado = coletar(form);
+  // O WhatsApp entende *asteriscos* como negrito.
+  function montarMensagem(dados) {
+    var linhas = ["Olá! Vim pelo site da TravelBuenaVista 👋", ""];
 
-    if (resultado.erro) {
-      marcarErro(resultado.erro.el, resultado.erro.msg);
-      return;
+    CAMPOS.forEach(function (campo) {
+      var valor = dados[campo.id];
+      if (valor) linhas.push("*" + campo.rotulo + ":* " + valor);
+    });
+
+    return linhas.join("\n");
+  }
+
+  function enviarPeloWhatsapp(form, dados, modal, restaurar) {
+    var url =
+      "https://wa.me/" +
+      WHATSAPP_NUMERO +
+      "?text=" +
+      encodeURIComponent(montarMensagem(dados));
+
+    // Abrir na mesma ação do clique evita bloqueio de pop-up.
+    var aba = window.open(url, "_blank", "noopener");
+
+    if (aba) {
+      modal.mostrar(
+        "success-icon",
+        "&#10004;",
+        "Abrindo o WhatsApp...",
+        'Sua mensagem já vai preenchida. Se a aba não abrir, ' +
+          '<a href="' + url + '" target="_blank" rel="noopener">toque aqui</a>.'
+      );
+      form.reset();
+      setTimeout(modal.esconder, 5000);
+    } else {
+      // Pop-up bloqueado: não perdemos o lead, damos o link para clicar.
+      modal.mostrar(
+        "error-icon",
+        "&#10006;",
+        "Seu navegador bloqueou a janela",
+        '<a href="' + url + '" target="_blank" rel="noopener">Toque aqui para abrir o WhatsApp</a> ' +
+          "com sua mensagem pronta."
+      );
     }
 
-    if (botao) {
-      botao.disabled = true;
-      botao.innerHTML = "Enviando...";
-    }
+    restaurar();
+  }
 
-    modal.mostrar(
-      "loader-circle",
-      "",
-      "Enviando...",
-      "Estamos registrando sua solicitação."
-    );
+  /* ------------------------------------------------------- modo: backend */
+
+  function enviarPeloBackend(form, dados, modal, restaurar) {
+    modal.mostrar("loader-circle", "", "Enviando...", "Estamos registrando sua solicitação.");
 
     var avisoDemora = setTimeout(function () {
       var texto = document.getElementById("modalMessage");
@@ -142,15 +185,13 @@
     fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(resultado.dados),
+      body: JSON.stringify(dados),
       signal: controller ? controller.signal : undefined
     })
       .then(function (response) {
         // O código antigo não checava isso: um 500 caía no .then e o usuário
         // via "Sucesso!" com o e-mail nunca entregue.
-        if (!response.ok) {
-          throw new Error("HTTP " + response.status);
-        }
+        if (!response.ok) throw new Error("HTTP " + response.status);
         return response.text();
       })
       .then(function () {
@@ -164,26 +205,25 @@
         setTimeout(modal.esconder, 4000);
       })
       .catch(function (erro) {
-        console.error("Falha ao enviar formulario:", erro);
+        console.error("Falha ao enviar formulário:", erro);
         modal.mostrar(
           "error-icon",
           "&#10006;",
           "Não conseguimos enviar",
           'Tente novamente ou fale direto no <a href="' +
-            WHATSAPP +
+            WHATSAPP_LINK +
             '" target="_blank" rel="noopener">WhatsApp</a>.'
         );
-        // Sem auto-hide no erro: o usuario precisa ver o link do WhatsApp.
+        // Sem auto-hide no erro: o usuário precisa ver o link do WhatsApp.
       })
       .finally(function () {
         clearTimeout(avisoDemora);
         clearTimeout(expirou);
-        if (botao) {
-          botao.disabled = false;
-          botao.innerHTML = textoOriginal;
-        }
+        restaurar();
       });
   }
+
+  /* ------------------------------------------------------------- ligação */
 
   document.addEventListener("DOMContentLoaded", function () {
     var form = document.getElementById("contactForm");
@@ -191,7 +231,37 @@
 
     form.addEventListener("submit", function (event) {
       event.preventDefault();
-      enviar(form);
+
+      var modal = Modal();
+      var botao = form.querySelector('[type="submit"]');
+      var textoOriginal = botao ? botao.innerHTML : null;
+
+      limparErros(form);
+
+      // Valida ANTES de desabilitar o botão. Fazer o contrário deixava o
+      // botão travado para sempre quando um campo estava faltando.
+      var resultado = coletar(form);
+      if (resultado.erro) {
+        marcarErro(resultado.erro.el, resultado.erro.msg);
+        return;
+      }
+
+      function restaurar() {
+        if (!botao) return;
+        botao.disabled = false;
+        botao.innerHTML = textoOriginal;
+      }
+
+      if (botao) {
+        botao.disabled = true;
+        botao.innerHTML = "Enviando...";
+      }
+
+      if (MODO === "whatsapp") {
+        enviarPeloWhatsapp(form, resultado.dados, modal, restaurar);
+      } else {
+        enviarPeloBackend(form, resultado.dados, modal, restaurar);
+      }
     });
 
     // Fecha o modal ao clicar fora dele.
