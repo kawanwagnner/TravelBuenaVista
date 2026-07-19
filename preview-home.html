@@ -296,11 +296,13 @@
                 <h2>Quem viajou, conta</h2>
             </div>
 
-            <div class="grid grid-3">
+            <!-- Depoimentos reais de clientes: texto transcrito na íntegra da
+                 home antiga. Não editar, encurtar nem parafrasear. -->
+            <div class="quotes" id="quotes" tabindex="0" role="region" aria-label="Depoimentos de clientes">
                 <blockquote class="quote">
                     <div class="quote-stars">★★★★★</div>
-                    <p>"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível. Nos ajudou muito! Super
-                        recomendo!"</p>
+                    <p>"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível."<br>"Obrigada Thiago! Foi
+                        uma viagem incrivel. Nos ajudou muito!!! Super recomendo!"</p>
                     <footer class="quote-author">
                         <img src="img/comments/vivi.webp" alt="Vivi e Sueli, clientes da TravelBuenaVista"
                             loading="lazy" decoding="async">
@@ -310,18 +312,31 @@
 
                 <blockquote class="quote">
                     <div class="quote-stars">★★★★★</div>
-                    <p>"Terceiro ano consecutivo realizando um grande sonho através da Travel Buena Vista. Viagem
-                        incrível, assistência perfeita."</p>
+                    <p>"Mais uma viagem inesquecível, sempre contando com a segurança e todos os serviços da
+                        TravelBuenaVista e do meu amigo Thiago Ribeiro"</p>
                     <footer class="quote-author">
-                        <img src="img/comments/andreia.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy"
-                            decoding="async">
-                        <span><strong>Andreia</strong><span>Grécia e Egito</span></span>
+                        <img src="img/comments/sem-nome1.webp" alt="Andreia, cliente da TravelBuenaVista"
+                            loading="lazy" decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
                     </footer>
                 </blockquote>
 
                 <blockquote class="quote">
                     <div class="quote-stars">★★★★★</div>
-                    <p>"Deu tudo certo, aproveitamos bastante. Organização impecável do começo ao fim."</p>
+                    <p>"Mais uma vez (terceiro ano consecutivo), realizei um grande sonho através da Travel Buena
+                        Vista. O excelente serviço da Travel e o acompanhamento profissional do amigo Thiago me
+                        proporcionaram conhecer e aprender mais sobre a cultura e a história da Grécia. Viagem
+                        incrível. Assistência perfeita. Muito obrigada, Travel Buena Vista!"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/andreia.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy"
+                            decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Deu tudo certo, aproveitamos bastante."</p>
                     <footer class="quote-author">
                         <img src="img/comments/tati.webp" alt="Tati Torricelli, cliente da TravelBuenaVista"
                             loading="lazy" decoding="async">
@@ -329,6 +344,8 @@
                     </footer>
                 </blockquote>
             </div>
+
+            <div class="quotes-dots" id="quotesDots"></div>
         </div>
     </section>
 
@@ -470,6 +487,107 @@
             menu.addEventListener('click', function (e) {
                 if (e.target.tagName === 'A') menu.classList.remove('open');
             });
+        })();
+
+        // Carrossel de depoimentos: autoplay + loop + bolinhas, como o
+        // owl.carousel do site antigo — mas sem jQuery e sem a lib (~250KB).
+        // O deslize em si é scroll-snap nativo, então arrastar no celular,
+        // roda do mouse e navegação por teclado funcionam sem código extra.
+        (function () {
+            var trilho = document.getElementById('quotes');
+            var dots = document.getElementById('quotesDots');
+            if (!trilho || !dots) return;
+
+            var INTERVALO = 5000;
+            var timer = null;
+            var paginas = 1;
+
+            var semAnimacao = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // A última página costuma ser parcial (4 cards, 3 por vez), então
+            // rolar de largura em largura estoura o fim e trava. Calculamos
+            // sobre o scroll disponível, distribuindo as páginas nele.
+            function maxScroll() {
+                return trilho.scrollWidth - trilho.clientWidth;
+            }
+            function totalPaginas() {
+                return Math.max(1, Math.ceil(trilho.scrollWidth / trilho.clientWidth - 0.02));
+            }
+            function paginaAtual() {
+                var max = maxScroll();
+                if (max <= 0) return 0;
+                return Math.round((trilho.scrollLeft / max) * (paginas - 1));
+            }
+
+            function irPara(i, suave) {
+                var max = maxScroll();
+                var destino = paginas > 1 ? (i / (paginas - 1)) * max : 0;
+                trilho.scrollTo({
+                    left: destino,
+                    behavior: suave && !semAnimacao ? 'smooth' : 'auto',
+                });
+            }
+
+            function montarDots() {
+                paginas = totalPaginas();
+                dots.innerHTML = '';
+                for (var i = 0; i < paginas; i++) {
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.setAttribute('aria-label', 'Ir para os depoimentos ' + (i + 1));
+                    b.dataset.i = i;
+                    dots.appendChild(b);
+                }
+                marcar();
+            }
+
+            function marcar() {
+                var atual = paginaAtual();
+                Array.prototype.forEach.call(dots.children, function (b, i) {
+                    b.setAttribute('aria-current', i === atual ? 'true' : 'false');
+                });
+            }
+
+            function avancar() {
+                var proxima = paginaAtual() + 1;
+                irPara(proxima >= paginas ? 0 : proxima, true); // loop
+            }
+
+            function tocar() {
+                if (semAnimacao || timer) return;
+                timer = setInterval(avancar, INTERVALO);
+            }
+            function pausar() {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            dots.addEventListener('click', function (e) {
+                var b = e.target.closest('button');
+                if (!b) return;
+                irPara(Number(b.dataset.i), true);
+            });
+
+            // Não roda sozinho enquanto a pessoa está lendo ou interagindo.
+            ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(function (ev) {
+                trilho.addEventListener(ev, pausar, { passive: true });
+            });
+            ['mouseleave', 'focusout'].forEach(function (ev) {
+                trilho.addEventListener(ev, tocar, { passive: true });
+            });
+            // Nem quando a aba está em segundo plano.
+            document.addEventListener('visibilitychange', function () {
+                document.hidden ? pausar() : tocar();
+            });
+
+            trilho.addEventListener('scroll', marcar, { passive: true });
+            window.addEventListener('resize', function () {
+                montarDots();
+                irPara(paginaAtual(), false);
+            });
+
+            montarDots();
+            tocar();
         })();
     </script>
     <script defer src="js/form.js"></script>
