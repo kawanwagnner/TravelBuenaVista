@@ -114,12 +114,17 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 .btn-block { width: 100%; }
 
 /* ---------- Cabeçalho ---------- */
+/* Some no mobile: ocupava ~70px do topo — o espaço mais disputado da tela —
+   para repetir contatos que já estão no rodapé, no botão flutuante de
+   WhatsApp e na página de contato. O site antigo também a escondia. */
 .topbar {
+  display: none;
   background: var(--ink);
   color: #cbd5e1;
   font-size: .87rem;
   padding: .55rem 0;
 }
+@media (min-width: 992px) { .topbar { display: block; } }
 .topbar .wrap { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; align-items: center; justify-content: space-between; }
 .topbar a { transition: color .15s; }
 .topbar a:hover { color: var(--white); }
@@ -666,7 +671,6 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   .nav-toggle { display: block; }
   .site-header .wrap { position: relative; }
   .trust { margin-top: -2.5rem; }
-  .topbar .wrap { justify-content: center; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
