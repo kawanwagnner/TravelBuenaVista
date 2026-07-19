@@ -20,14 +20,21 @@
     $(window).resize(toggleNavbarMethod);
   });
 
-  $(document).ready(function () {
-    // Tela de carregamento de 3 segundos
-    setTimeout(function () {
-      $("#preloader").fadeOut("slow", function () {
-        $(this).remove();
-      });
-    }, 3000);
+  // Preloader: some assim que a pagina termina de carregar.
+  // Antes havia um setTimeout fixo de 3s, que segurava o site mesmo quando
+  // ele ja estava pronto — 3 segundos de espera artificial para todo visitante.
+  $(window).on("load", function () {
+    $("#preloader").fadeOut("slow", function () {
+      $(this).remove();
+    });
   });
+
+  // Rede ruim ou asset travado nao pode prender o usuario na tela de loading.
+  setTimeout(function () {
+    $("#preloader").fadeOut("slow", function () {
+      $(this).remove();
+    });
+  }, 8000);
 
   // Back to top button
   $(window).scroll(function () {
@@ -42,13 +49,11 @@
     return false;
   });
 
-  // Date and time picker
-  $(".date").datetimepicker({
-    format: "L",
-  });
-  $(".time").datetimepicker({
-    format: "LT",
-  });
+  // Date and time picker — so inicializa se a pagina tiver os campos.
+  if ($.fn.datetimepicker) {
+    if ($(".date").length) $(".date").datetimepicker({ format: "L" });
+    if ($(".time").length) $(".time").datetimepicker({ format: "LT" });
+  }
 
   // Testimonials carousel
   $(".testimonial-carousel").owlCarousel({

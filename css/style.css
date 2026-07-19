@@ -11053,7 +11053,7 @@ h6,
 
 .bg-registration {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(../img/ceu-floresta.png), no-repeat center center;
+    url(../img/ceu-floresta.webp), no-repeat center center;
   background-size: cover;
 }
 
