@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais</title>
     <meta name="description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="canonical" href="https://www.tbvtagencia.com/">
 
     <!-- Open Graph / WhatsApp / Facebook -->
@@ -24,25 +25,14 @@
     <meta name="twitter:description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
     <meta name="twitter:image" content="https://www.tbvtagencia.com/img/og-image.jpg">
 
-    <meta name="theme-color" content="#00A3E0">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="theme-color" content="#285fc2">
+    <link rel="icon" href="img/favicon-travel.png" type="image/png">
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="img/favicon-travel.png" type="image/x-icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- CSS -->
-    <link href="css/style.css" rel="stylesheet">
-
+    <link href="css/redesign.css" rel="stylesheet">
     <!-- Dados estruturados: ajuda o Google a exibir a agência em busca local -->
     <script type="application/ld+json">
     {
@@ -52,7 +42,7 @@
       "url": "https://www.tbvtagencia.com/",
       "image": "https://www.tbvtagencia.com/img/og-image.jpg",
       "email": "contato@tbvtagencia.com",
-      "telephone": "+5511958610873",
+      "telephone": "+5511976732628",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "São Paulo",
@@ -68,949 +58,429 @@
 </head>
 
 <body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="three-body">
-            <div class="three-body__dot"></div>
-            <div class="three-body__dot"></div>
-            <div class="three-body__dot"></div>
-        </div>
-    </div>
 
-    <!-- Modal de Confirmação -->
-    <div id="loadingModal" class="loading-modal" style="display: none;">
-        <div class="loading-modal-content">
-            <div id="loaderIcon" class="loader-circle"></div> <!-- Loader padrão que será substituído -->
-            <h2 id="modalTitle">Enviando...</h2>
-            <p id="modalMessage">Por favor, aguarde enquanto processamos sua inscrição.</p>
-        </div>
-    </div>
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-light pt-3 d-none d-lg-block">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                    <div class="d-inline-flex align-items-center">
-                        <a class="text-dark" href="mailto:contato@tbvtagencia.com" target="_blank">
-                            <p><i class="fa fa-envelope mr-2"></i>contato@tbvtagencia.com</p>
-                        </a>
-                        <p class="text-body px-3">|</p>
-                        <a class="text-dark" href="tel:11958610873" target="_blank">
-                            <p><i class="fa fa-phone-alt mr-2"></i>(11) 95861-0873</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center text-lg-right">
-                    <div class="d-inline-flex align-items-center">
-                        <a class="text-primary px-3" href="https://contate.me/travelbuenavista" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <a class="text-primary px-3" href="https://www.facebook.com/travelbuenavista" target="_blank">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a class="text-primary px-3" href="https://www.instagram.com/travelbuenavista/" target="_blank">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
+    <div class="topbar">
+        <div class="wrap">
+            <div class="topbar-contact">
+                <a href="mailto:contato@tbvtagencia.com"><i class="fa fa-envelope"></i> contato@tbvtagencia.com</a>
+                <a href="tel:+5511976732628"><i class="fa fa-phone-alt"></i> (11) 97673-2628</a>
+            </div>
+            <div class="topbar-social">
+                <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/travelbuenavista/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/travelbuenavista" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
     </div>
-    <!-- Topbar End -->
 
-    <!-- Navbar Start -->
-    <div class="container-fluid position-relative nav-bar p-0">
-        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
-                <a href="#" class="navbar-brand">
-                    <h1 class="m-0 text-primary"><span class="text-dark">TravelBuena</span>Vista</h1>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
-                    <div class="navbar-nav ml-auto py-0">
-                        <a href="index.html" class="nav-item nav-link active">Início</a>
-                        <a href="about.html" class="nav-item nav-link">Sobre</a>
-                        <a href="service.html" class="nav-item nav-link">Serviços</a>
-                        <a href="package.html" class="nav-item nav-link">Pacotes turísticos</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Páginas</a>
-                            <div class="dropdown-menu border-0 rounded-0 m-0">
-                                <a href="blog.html" class="dropdown-item">Blog</a>
-                                <!-- <a href="single.html" class="dropdown-item">Detalhes do Blog</a> -->
-                                <a href="destination.html" class="dropdown-item">Destino</a>
-                                <a href="guide.html" class="dropdown-item">Nossos Guias</a>
-                                <a href="testimonial.html" class="dropdown-item">Testemunhas</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contato</a>
-                    </div>
-                </div>
+    <header class="site-header">
+        <div class="wrap">
+            <a href="index.html" class="brand">TravelBuena<span>Vista</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+                <i class="fa fa-bars"></i>
+            </button>
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="active" aria-current="page">Início</a>
+                <a href="about.html">Sobre</a>
+                <a href="service.html">Serviços</a>
+                <a href="package.html">Pacotes</a>
+                <a href="destination.html">Destinos</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contato</a>
             </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
-
-    <!-- Carousel Start -->
-    <div class="container-fluid p-0">
-        <div id="header-carousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="img/carosel1.webp" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-md-3">Passeios & viagens</h4>
-                            <h1 class="display-3 text-white mb-md-4">Vamos descobrir o mundo juntos</h1>
-                            <a href="https://contate.me/travelbuenavista" target="_blank"
-                                class="btn btn-primary py-md-3 px-md-5 mt-2">Negociar Agora!</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="img/carosel2.webp" alt="Image">
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3" style="max-width: 900px;">
-                            <h4 class="text-white text-uppercase mb-md-3">Passeios & viagens</h4>
-                            <h1 class="display-3 text-white mb-md-4">Descubra lugares incríveis conosco</h1>
-                            <a href="https://contate.me/travelbuenavista" target="_blank"
-                                class="btn btn-primary py-md-3 px-md-5 mt-2">Negociar Agora!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-prev-icon mb-n2"></span>
-                </div>
-            </a>
-            <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                    <span class="carousel-control-next-icon mb-n2"></span>
-                </div>
+            <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats header-cta">
+                <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
         </div>
-    </div>
-    <!-- Carousel End -->
+    </header>
 
-    <!-- Booking Start -->
-    <!-- <div class="container-fluid booking mt-5 pb-5">
-        <div class="container pb-5">
-            <div class="bg-light shadow" style="padding: 30px;">
-                <div class="row align-items-center" style="min-height: 60px;">
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="mb-3 mb-md-0">
-                                    <select class="custom-select px-4" style="height: 47px;">
-                                        <option selected>Destination</option>
-                                        <option value="1">Destination 1</option>
-                                        <option value="2">Destination 1</option>
-                                        <option value="3">Destination 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3 mb-md-0">
-                                    <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Depart Date" data-target="#date1" data-toggle="datetimepicker"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3 mb-md-0">
-                                    <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Return Date" data-target="#date2" data-toggle="datetimepicker"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3 mb-md-0">
-                                    <select class="custom-select px-4" style="height: 47px;">
-                                        <option selected>Duration</option>
-                                        <option value="1">Duration 1</option>
-                                        <option value="2">Duration 1</option>
-                                        <option value="3">Duration 1</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Submit</button>
-                    </div>
+    <section class="hero" style="background-image: url('img/carosel1.webp')">
+        <div class="wrap">
+            <h1>Vamos descobrir o mundo juntos</h1>
+            <p class="hero-lead">Atendimento pessoal do primeiro contato ao dia da volta. Montamos o roteiro do seu
+                jeito — nacional ou internacional — e acompanhamos você em cada etapa da viagem.</p>
+            <div class="hero-actions">
+                <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats btn-lg">
+                    <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+                <a href="package.html" class="btn btn-ghost btn-lg">Ver pacotes</a>
+            </div>
+        </div>
+    </section>
+
+    <div class="wrap">
+        <!-- Sem métricas: qualquer número aqui precisa vir da agência.
+             Estes quatro itens só reafirmam o que o site já descreve. -->
+        <div class="trust">
+            <div class="trust-item"><i class="fab fa-whatsapp"></i><span>Atendimento direto no WhatsApp</span></div>
+            <div class="trust-item"><i class="fa fa-route"></i><span>Roteiros montados sob medida</span></div>
+            <div class="trust-item"><i class="fa fa-globe-americas"></i><span>Destinos nacionais e internacionais</span></div>
+            <div class="trust-item"><i class="fa fa-user-friends"></i><span>Acompanhamento durante a viagem</span></div>
+        </div>
+    </div>
+
+    <section id="destinos">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Destinos</span>
+                <h2>Explore o mundo com quem conhece</h2>
+                <p>Do Nordeste brasileiro ao Sudeste Asiático — escolha por onde começar e a gente monta o resto.</p>
+            </div>
+
+            <div class="grid grid-4">
+                <a class="dest" href="contact.html">
+                    <img src="img/brasil.webp" alt="Destinos no Brasil" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Brasil</strong><span>Praias, serra e ecoturismo</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-sul.webp" alt="Destinos na América do Sul" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América do Sul</strong><span>Vizinhos que surpreendem</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-norte.webp" alt="Destinos na América do Norte" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América do Norte</strong><span>EUA, Canadá e México</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-central.webp" alt="Destinos na América Central" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América Central</strong><span>Caribe e Cancún</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/europa.webp" alt="Destinos na Europa" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Europa</strong><span>História, arte e gastronomia</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/asia.webp" alt="Destinos na Ásia" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Ásia</strong><span>Tailândia, Japão e Israel</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/africa.webp" alt="Destinos na África" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>África</strong><span>Egito e safáris</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/oceania.webp" alt="Destinos na Oceania" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Oceania</strong><span>Austrália e Nova Zelândia</span></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-soft">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Serviços</span>
+                <h2>Tudo resolvido em um lugar só</h2>
+                <p>Você fala o que quer viver. A gente cuida de cada detalhe até o embarque.</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-suitcase-rolling"></i></div>
+                    <h3>Pacotes nacionais e internacionais</h3>
+                    <p>Voo, hospedagem e passeios num pacote só, com o roteiro ajustado ao seu ritmo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-hotel"></i></div>
+                    <h3>Resorts e hotéis</h3>
+                    <p>Seleção de hospedagem pelo que importa pra você: localização, estrutura ou sossego.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-ship"></i></div>
+                    <h3>Cruzeiros</h3>
+                    <p>Vários destinos numa viagem só, com tudo organizado antes de você subir a bordo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-plane-departure"></i></div>
+                    <h3>Aéreo nacional e internacional</h3>
+                    <p>Busca de melhores rotas e tarifas, com conexões que fazem sentido de verdade.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-tree"></i></div>
+                    <h3>Pousadas</h3>
+                    <p>Hospedagem com jeito de casa para quem quer contato de perto com o destino.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-users"></i></div>
+                    <h3>Excursões</h3>
+                    <p>Viagens em grupo acompanhadas, com guia da Travel Buena Vista do início ao fim.</p>
                 </div>
             </div>
         </div>
-    </div> -->
-    <!-- Booking End -->
+    </section>
 
-    <!-- About Start -->
-    <div id="about" class="container-fluid py-5">
-        <div class="container pt-5">
-            <div class="row">
-                <div class="col-lg-6" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img loading="lazy" decoding="async" class="position-absolute w-100 h-100" src="img/about.webp" style="object-fit: cover;" alt="Avião no céu com a mensagem: é hora de viajar, reserve!">
-                    </div>
+    <section>
+        <div class="wrap">
+            <div class="about">
+                <div class="about-media">
+                    <img src="img/about.webp" alt="Avião no céu com a mensagem: é hora de viajar, reserve!" loading="lazy" decoding="async">
                 </div>
-                <div class="col-lg-6 pt-5 pb-lg-5">
-                    <div class="about-text bg-white p-4 p-lg-5 my-lg-5">
-                        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Sobre nós</h6>
-                        <h1 class="mb-3">Oferecemos os melhores pacotes turísticos dentro do seu orçamento</h1>
-                        <p>Somos uma agência cuja essência é tratar bem o cliente e tornar sua viagem inesquecível.
-                            Prezamos pelo bom atendimento e nos esforçamos para que todas as pessoas tenham o prazer de
-                            viajar e queiram retornar para outras viagens no futuro.</p>
-                        <div class="row mb-4">
-                            <div class="col-6">
-                                <img loading="lazy" decoding="async" class="img-fluid" src="img/about-1.webp" alt="">
-                            </div>
-                            <div class="col-6">
-                                <img loading="lazy" decoding="async" class="img-fluid" src="img/about-2.webp" alt="">
-                            </div>
-                        </div>
-                        <a href="https://contate.me/travelbuenavista" target="_blank"
-                            class="btn btn-primary mt-1">Negociar Agora!</a>
+                <div>
+                    <span class="eyebrow">Quem somos</span>
+                    <h2>Agência pequena, atenção grande</h2>
+                    <p>Somos uma agência cuja essência é tratar bem o cliente e tornar sua viagem inesquecível.
+                        Prezamos pelo bom atendimento e nos esforçamos para que todas as pessoas tenham o prazer de
+                        viajar e queiram retornar para outras viagens no futuro.</p>
+                    <ul>
+                        <li><i class="fa fa-check-circle"></i><span>Roteiro montado do zero, no seu orçamento</span></li>
+                        <li><i class="fa fa-check-circle"></i><span>Acompanhamento antes, durante e depois</span></li>
+                        <li><i class="fa fa-check-circle"></i><span>Clientes que voltam ano após ano</span></li>
+                    </ul>
+
+                    <div class="about-thumbs">
+                        <img src="img/about-1.webp" alt="Taj Mahal, na Índia" loading="lazy" decoding="async">
+                        <img src="img/about-2.webp" alt="Barco tradicional em praia da Tailândia" loading="lazy" decoding="async">
                     </div>
+
+                    <a href="contact.html" class="btn btn-primary btn-lg">Pedir meu orçamento</a>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- About End -->
+    </section>
 
-    <!-- Feature Start -->
-    <div class="container-fluid pb-5">
-        <div class="container pb-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="d-flex mb-4 mb-lg-0">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3"
-                            style="height: 100px; width: 100px;">
-                            <i class="fa fa-2x fa-money-check-alt text-white"></i>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <h5 class="">Preço Competitivo</h5>
-                            <p class="m-0">Oferecemos soluções com excelente custo-benefício, garantindo que você
-                                obtenha os melhores serviços por preços.</p>
-                        </div>
+    <section id="depoimentos" class="section-soft">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Depoimentos</span>
+                <h2>Quem viajou, conta</h2>
+            </div>
+
+            <!-- Depoimentos reais de clientes: texto transcrito na íntegra do
+                 site antigo. Não editar, encurtar nem parafrasear. -->
+            <div class="quotes" id="quotes" tabindex="0" role="region" aria-label="Depoimentos de clientes">
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível."<br>"Obrigada Thiago! Foi uma viagem incrivel. Nos ajudou muito!!! Super recomendo!"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/vivi.webp" alt="Vivi e Sueli, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Vivi &amp; Sueli</strong><span>Clientes</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Mais uma viagem inesquecível, sempre contando com a segurança e todos os serviços da TravelBuenaVista e do meu amigo Thiago Ribeiro"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/sem-nome1.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Mais uma vez (terceiro ano consecutivo), realizei um grande sonho através da Travel Buena Vista. O excelente serviço da Travel e o acompanhamento profissional do amigo Thiago me proporcionaram conhecer e aprender mais sobre a cultura e a história da Grécia. Viagem incrível. Assistência perfeita. Muito obrigada, Travel Buena Vista!"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/andreia.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Deu tudo certo, aproveitamos bastante."</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/tati.webp" alt="Tati Torricelli, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Tati Torricelli</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+            </div>
+
+            <div class="quotes-dots" id="quotesDots"></div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="wrap">
+            <div>
+                <span class="eyebrow">Orçamento sem compromisso</span>
+                <h2>Conta pra gente pra onde você quer ir</h2>
+                <p>Responde em poucos campos e a gente retorna com uma proposta montada no seu orçamento. Se preferir
+                    conversar agora, chama no WhatsApp.</p>
+                <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats btn-lg">
+                    <i class="fab fa-whatsapp"></i> Prefiro o WhatsApp
+                </a>
+            </div>
+
+            <div class="form-card">
+                <h3>Peça seu orçamento</h3>
+                <p>Retornamos no mesmo dia útil.</p>
+
+                <form id="contactForm" novalidate>
+                    <div class="field">
+                        <label for="nome">Seu nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" autocomplete="name" required>
+                        <p class="help-block"></p>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex mb-4 mb-lg-0">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3"
-                            style="height: 100px; width: 100px;">
-                            <i class="fa fa-2x fa-award text-white"></i>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <h5 class="">Melhores Serviços</h5>
-                            <p class="m-0">Nossa equipe especializada está sempre pronta para oferecer serviços de alta
-                                qualidade, atendendo às suas necessidades.</p>
-                        </div>
+                    <div class="field">
+                        <label for="email">Seu e-mail</label>
+                        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required>
+                        <p class="help-block"></p>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex mb-4 mb-lg-0">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-primary mr-3"
-                            style="height: 100px; width: 100px;">
-                            <i class="fa fa-2x fa-globe text-white"></i>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <h5 class="">Nível Mundial</h5>
-                            <p class="m-0">Com nossa cobertura global, oferecemos suporte e atendimento para diversos
-                                países. Cuidamos de você!
-                            </p>
-                        </div>
+                    <div class="field">
+                        <label for="zap">Seu WhatsApp</label>
+                        <input type="tel" id="zap" name="zap" placeholder="(11) 90000-0000" autocomplete="tel" required>
+                        <p class="help-block"></p>
                     </div>
-                </div>
+                    <div class="field">
+                        <label for="destination">Para onde você quer ir?</label>
+                        <input type="text" id="destination" name="destination" placeholder="Ex.: Cancún em julho" required>
+                        <p class="help-block"></p>
+                    </div>
+                    <div class="field">
+                        <label for="quest">Conte um pouco mais</label>
+                        <textarea id="quest" name="quest" placeholder="Quantas pessoas, datas aproximadas, o que não pode faltar..." required></textarea>
+                        <p class="help-block"></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Quero meu orçamento</button>
+                    <p class="form-note">Seus dados são usados só para responder este contato.</p>
+                </form>
             </div>
         </div>
-    </div>
-    <!-- Feature End -->
+    </section>
 
-    <!-- Destination Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Destino</h6>
-                <h1>Explore a nível internacional</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/brasil.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">Brasil</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/america-norte.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">América do Norte</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/america-sul.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">América do Sul</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/africa.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">África</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/oceania.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">Oceania</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/asia.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">Ásia</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 mx-auto">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/america-central.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">América Central</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 mx-auto">
-                    <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/europa.webp" alt="">
-                        <a class="destination-overlay text-white text-decoration-none"
-                            href="https://contate.me/travelbuenavista" target="_blank">
-                            <h5 class="text-white">Europa</h5>
-                            <!-- <span>100 Cities</span> -->
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Destination end -->
-
-    <!-- Service Start -->
-    <div id="service" class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Serviços</h6>
-                <h1>Pacotes de Serviços</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-plane mx-auto mb-4"></i>
-                        <h5 class="mb-2">Pacotes Nacional e Internacional</h5>
-                        <p class="m-0">Oferecemos pacotes completos e personalizados para todos os destinos garantindo
-                            paz e conforto em sua viagem.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-hotel mx-auto mb-4"></i>
-                        <h5 class="mb-2">Resorts e Hotéis</h5>
-                        <p class="m-0">Hospede-se em resorts e hotéis renomados, cuidadosamente selecionados para
-                            proporcionar o máximo de conforto e qualidade durante a sua estadia.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-ship mx-auto mb-4"></i>
-                        <h5 class="mb-2">Cruzeiros</h5>
-                        <p class="m-0">Desfrute de experiências incríveis a bordo de cruzeiros luxuosos que percorrem
-                            destinos nacionais e internacionais, com entretenimento e conforto.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-plane-departure mx-auto mb-4"></i>
-                        <h5 class="mb-2">Aéreo Nacional e Internacional</h5>
-                        <p class="m-0">Oferecemos passagens aéreas para destinos nacionais e internacionais com tarifas
-                            competitivas e várias rotas para sua comodidade.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-home mx-auto mb-4"></i>
-                        <h5 class="mb-2">Pousadas</h5>
-                        <p class="m-0">Conheça pousadas acolhedoras e charmosas em diversos destinos turísticos,
-                            oferecendo uma experiência mais íntima e tranquila durante sua viagem.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="service-item bg-white text-center mb-2 py-5 px-4">
-                        <i class="fa fa-2x fa-bus mx-auto mb-4"></i>
-                        <h5 class="mb-2">Excursões</h5>
-                        <p class="m-0">Participe de excursões cuidadosamente planejadas para explorar os principais
-                            pontos turísticos e desfrutar de uma experiência cultural enriquecedora.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-    <!-- Packages Start -->
-    <div id="packages" class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Pacotes</h6>
-                <h1>Pacotes turísticos em alta</h1>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-1.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Brasil</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>4 Noites</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">Bonito - MS</a>
-                            <br>
-                            <span>Bilhete aéreo voando Latam, 1 Bagagem de até 23kg, 4 Noites de hospedagem: Wetiga
-                                Hotel, Regime Café da Manhã, Traslados de chegada e saída, Seguro Viagem Assist
-                                Card.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(22)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-2.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Mar</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>X Dias</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">MSC Splendida Com Bebidas All Incluse - MSC
-                                Cruzeiros</a>
-                            <br>
-                            <span>Aproveite os melhores roteiros pela Argentina e Uruguai.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(10)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-3.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Brasil</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>7 Noites</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">Gramado - RS </a> <br>
-                            <span>Bilhete aéreo voando Latam, 1 bagagem de até 23kg, 7 noites de hospedagem: Hotel
-                                Laghetto Vivace, regime café da manhã, traslados de chegada e saída, ingresso 01 dia
-                                Bustour, seguro viagem Assist Card.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(17)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-4.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>França</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>7 Dias</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">Brasileiros nas Maravilhas de Paris, Lourdes e
-                                Madri - com aéreo TAP partindo de Brasília</a>
-                            <br><span>07 Dias visitando: Paris, Blois, Tours, Bordeaux, Lourdes, San Sebastian, Madri.
-                                Guia acompanhante falando português + Hospedagem com café da manhã + Traslados +
-                                Passeios nas cidades visitadas.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(11)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-5.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>Mar</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>7 Dias</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">Réveillon no Costa Pacífica</a>
-                            <br>
-                            <span>Cruzeiro + Pensão Completa</span> <br>
-                            <span>CABINE INTERNA DUPLA, preço por pessoa sem taxas.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(15)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="package-item bg-white mb-2">
-                        <img loading="lazy" decoding="async" class="img-fluid" src="img/pacotes/pacote-6.webp" alt="">
-                        <div class="p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>África do
-                                    Sul</small>
-                                <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>8 Noites</small>
-                                <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>1 Pessoa</small>
-                            </div>
-                            <a class="h5 text-decoration-none" href="https://contate.me/travelbuenavista"
-                                target="_blank">Brasileiros nas Maravilhas da África do Sul. 08
-                                dias saindo de São Paulo - Voando South African</a>
-                            <br>
-                            <span>Aéreo Ida e Volta + trecho interno, 5 noites de hospedagem com café da manhã, 2 noites
-                                de hospedagem com meia pensão, todos os transfers incluídos, Safari no Kruger, Guia
-                                falando Português.</span>
-                            <div class="border-top mt-4 pt-4">
-                                <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>5.0 <small>(07)</small>
-                                    </h6>
-                                    <h5 class="m-0">R$ Relativo</h5>
-                                </div>
-                            </div>
-                        </div>
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="brand">TravelBuena<span>Vista</span></span>
+                    <p>Agência de viagens com atendimento pessoal, roteiros sob medida e acompanhamento do começo ao fim.</p>
+                    <div class="footer-social">
+                        <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/travelbuenavista/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/travelbuenavista" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-    <!-- Packages End -->
-
-    <!-- Registration Start -->
-    <div class="container-fluid bg-registration py-5" style="margin: 90px 0;">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-7 mb-5 mb-lg-0 mx-auto text-center">
-                    <div class="mb-4">
-                        <h6 class="font-weight-bold text-primary offer text-uppercase" style="letter-spacing: 5px;">
-                            Ofertas Exclusivas</h6>
-                        <h1 class="text-white"><span class="text-primary">Acompanhe nossos</span> Descontos Imperdíveis
-                        </h1>
-                    </div>
-                    <p class="text-white">Em breve, todos os nossos descontos estarão disponíveis aqui. Aproveite essas
-                        oportunidades únicas para viver uma viagem inesquecível. Com uma série de ofertas exclusivas,
-                        você poderá explorar destinos fascinantes ao lado de quem ama, criando memórias para toda a
-                        vida. Não deixe essas promoções passarem!</p>
-                    <ul class="list-inline text-white m-0">
-                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>[Em Breve] Descontos exclusivos em
-                            pacotes de viagem</li>
-                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>[Em Breve] Brindes e produtos para
-                            você aproveitar</li>
+                <div>
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="about.html">Sobre nós</a></li>
+                        <li><a href="service.html">Serviços</a></li>
+                        <li><a href="package.html">Pacotes</a></li>
+                        <li><a href="destination.html">Destinos</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-5">
-                    <div class="card border-0">
-                        <div class="card-header bg-primary text-center p-4">
-                            <h1 class="text-white m-0">Inscreva-se agora</h1>
-                        </div>
-                        <div class="card-body rounded-bottom bg-white p-5">
-                            <form id="contactForm" novalidate>
-                                <div class="form-group">
-                                    <label class="sr-only" for="nome">Seu nome</label>
-                                    <input type="text" class="form-control p-4" id="nome" name="nome"
-                                        placeholder="Seu nome" autocomplete="name" required />
-                                    <p class="help-block text-danger mb-0"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="email">Seu e-mail</label>
-                                    <input type="email" class="form-control p-4" id="email" name="email"
-                                        placeholder="Seu email" autocomplete="email" required />
-                                    <p class="help-block text-danger mb-0"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="zap">Seu celular</label>
-                                    <input type="tel" class="form-control p-4" id="zap" name="zap"
-                                        placeholder="Seu celular" autocomplete="tel" required />
-                                    <p class="help-block text-danger mb-0"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="destination">Destino de interesse</label>
-                                    <textarea style="max-height: 100px;" class="form-control" id="destination"
-                                        name="destination" placeholder="Conte-nos, para onde iria com os descontos?"
-                                        required></textarea>
-                                    <p class="help-block text-danger mb-0"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="quest">Por onde nos encontrou</label>
-                                    <textarea style="max-height: 100px;" class="form-control" id="quest" name="quest"
-                                        placeholder="Por onde nos encontrou?" required></textarea>
-                                    <p class="help-block text-danger mb-0"></p>
-                                </div>
-                                <div>
-                                    <button class="btn btn-primary btn-block py-3" type="submit">Inscreva-se
-                                        Agora</button>
-                                </div>
-                            </form>
 
-                        </div>
-                    </div>
+                <div>
+                    <h4>Mais</h4>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="guide.html">Nossos guias</a></li>
+                        <li><a href="testimonial.html">Depoimentos</a></li>
+                        <li><a href="contact.html">Contato</a></li>
+                    </ul>
                 </div>
+
+                <div>
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="mailto:contato@tbvtagencia.com"><i class="fa fa-envelope"></i> contato@tbvtagencia.com</a></li>
+                        <li><a href="tel:+5511976732628"><i class="fa fa-phone-alt"></i> (11) 97673-2628</a></li>
+                        <li><a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; TravelBuenaVista. Todos os direitos reservados.
             </div>
         </div>
-    </div>
-    <!-- Registration End -->
+    </footer>
 
-    <!-- Team Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Guias</h6>
-                <h1>Nossos Agentes</h1>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 col-sm-10 pb-2">
-                    <div class="team-item bg-white mb-4 mx-auto">
-                        <div class="team-img position-relative overflow-hidden">
-                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/thiago-guia.webp" alt="">
-                            <div class="team-social">
-                                <a class="btn btn-outline-primary btn-square"
-                                    href="https://www.facebook.com/travelbuenavista" target="_blank"><i
-                                        class="fab fa-facebook"></i></a>
-                                <a class="btn btn-outline-primary btn-square" href="https://contate.me/travelbuenavista"
-                                    target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a class="whats-float" href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-                                <a class="btn btn-outline-primary btn-square"
-                                    href="https://www.instagram.com/travelbuenavista/" target="_blank"><i
-                                        class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <h5 class="text-truncate">Thiago Ribeiro</h5>
-                            <p class="m-0">Agente</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="loadingModal" class="loading-modal">
+        <div class="loading-modal-content">
+            <div id="loaderIcon" class="loader-circle"></div>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMessage"></p>
         </div>
     </div>
-    <!-- Team End -->
 
-    <!-- Testimonial Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Comentários</h6>
-                <h1>O que dizem nossos clientes</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel">
-                <div class="text-center pb-4">
-                    <img loading="lazy" decoding="async" class="img-fluid mx-auto" src="img/comments/vivi.webp" style="width: 100px; height: 100px;" alt="Vivi e Sueli, clientes da TravelBuenaVista">
-                    <div class="testimonial-text bg-white p-4 mt-n5">
-                        <p class="mt-5">"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível."
-                            <br>"Obrigada Thiago! Foi uma viagem incrivel. Nos ajudou muito!!! Super recomendo!"
-                        </p>
-                        <h5 class="text-truncate">Vivi & Sueli</h5>
-                        <br>
-                        <span>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <img loading="lazy" decoding="async" class="img-fluid mx-auto" src="img/comments/sem-nome1.webp"
-                        style="width: 100px; height: 100px;" alt="Cliente da TravelBuenaVista">
-                    <div class="testimonial-text bg-white p-4 mt-n5">
-                        <p class="mt-5">"Mais uma viagem inesquecível, sempre contando com a segurança e todos os
-                            serviços da TravelBuenaVista e do meu
-                            amigo Thiago Ribeiro"</p>
-                        <h5 class="text-truncate">Andreia</h5>
-                        <br>
-                        <span>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <img loading="lazy" decoding="async" class="img-fluid mx-auto" src="img/comments/andreia.webp" style="width: 100px; height: 100px;" alt="Andreia, cliente da TravelBuenaVista">
-                    <div class="testimonial-text bg-white p-4 mt-n5">
-                        <p class="mt-5">"Mais uma vez (terceiro ano consecutivo), realizei um grande sonho através da
-                            Travel Buena Vista. O
-                            excelente serviço da Travel e
-                            o acompanhamento profissional do amigo Thiago me proporcionaram conhecer e aprender
-                            mais sobre a cultura e a
-                            história da Grécia. Viagem incrível. Assistência perfeita. Muito obrigada,
-                            Travel Buena Vista!"</p>
-                        <h5 class="text-truncate">Andreia</h5>
-                        <br>
-                        <span>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </span>
-                    </div>
-                </div>
+    <script>
+        // Menu mobile — sem jQuery.
+        (function () {
+            var botao = document.getElementById('navToggle');
+            var menu = document.getElementById('mainNav');
+            if (!botao || !menu) return;
+            botao.addEventListener('click', function () {
+                var aberto = menu.classList.toggle('open');
+                botao.setAttribute('aria-expanded', aberto);
+            });
+            menu.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A') menu.classList.remove('open');
+            });
+        })();
+    </script>
+    <script>
+        // Carrossel de depoimentos: autoplay + loop + bolinhas, como o
+        // owl.carousel do site antigo — mas sem jQuery e sem a lib (~250KB).
+        // O deslize é scroll-snap nativo: arrastar no touch, roda do mouse e
+        // teclado funcionam sem código extra.
+        (function () {
+            var trilho = document.getElementById('quotes');
+            var dots = document.getElementById('quotesDots');
+            if (!trilho || !dots) return;
 
-                <div class="text-center">
-                    <img loading="lazy" decoding="async" class="img-fluid mx-auto" src="img/comments/tati.webp" style="width: 100px; height: 100px;" alt="Tati, cliente da TravelBuenaVista">
-                    <div class="testimonial-text bg-white p-4 mt-n5">
-                        <p class="mt-5">"Deu tudo certo, aproveitamos bastante." <br> Viagem: Passeio em Arraial</p>
-                        <h5 class="text-truncate">Tati Torricelli</h5>
-                        <br>
-                        <span>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
+            var INTERVALO = 5000;
+            var timer = null;
+            var paginas = 1;
+            var semAnimacao = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    <!-- Blog Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Nosso Blog</h6>
-                <h1>Últimas do nosso blog</h1>
-            </div>
-            <div class="row pb-3">
-                <div class="col-lg-4 col-md-6 mb-4 pb-2">
-                    <div class="blog-item">
-                        <div class="position-relative">
-                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/travelBuena-photos/Andreia Egito.webp" alt="">
-                            <div class="blog-date">
-                                <h6 class="font-weight-bold mb-n1">10</h6>
-                                <small class="text-white text-uppercase">Jul</small>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4">
-                            <div class="d-flex mb-2">
-                                <a class="text-primary text-uppercase text-decoration-none" href="blog.html">Thiago</a>
-                                <span class="text-primary px-2">|</span>
-                                <a class="text-primary text-uppercase text-decoration-none"
-                                    href="blog.html">Aventura</a>
-                            </div>
-                            <a class="h5 m-0 text-decoration-none" href="blog.html">Experiência inesquecível no Egito,
-                                explorando as pirâmides e o deserto</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 pb-2">
-                    <div class="blog-item">
-                        <div class="position-relative">
-                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/travelBuena-photos/Londres.webp" alt="">
-                            <div class="blog-date">
-                                <h6 class="font-weight-bold mb-n1">15</h6>
-                                <small class="text-white text-uppercase">Ago</small>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4">
-                            <div class="d-flex mb-2">
-                                <a class="text-primary text-uppercase text-decoration-none" href="blog.html">Thiago</a>
-                                <span class="text-primary px-2">|</span>
-                                <a class="text-primary text-uppercase text-decoration-none"
-                                    href="blog.html">História</a>
-                            </div>
-                            <a class="h5 m-0 text-decoration-none" href="blog.html">Descubra a magia de Londres, com seu
-                                icônico
-                                Big Ben e sua cultura</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4 pb-2">
-                    <div class="blog-item">
-                        <div class="position-relative">
-                            <img loading="lazy" decoding="async" class="img-fluid w-100" src="img/travelBuena-photos/Israel.webp" alt="">
-                            <div class="blog-date">
-                                <h6 class="font-weight-bold mb-n1">05</h6>
-                                <small class="text-white text-uppercase">Mai</small>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4">
-                            <div class="d-flex mb-2">
-                                <a class="text-primary text-uppercase text-decoration-none" href="blog.html">Thiago</a>
-                                <span class="text-primary px-2">|</span>
-                                <a class="text-primary text-uppercase text-decoration-none"
-                                    href="blog.html">Natureza</a>
-                            </div>
-                            <a class="h5 m-0 text-decoration-none" href="blog.html">Explore as maravilhas naturais e os
-                                tesouros
-                                históricos de Israel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Blog End -->
+            function maxScroll() { return trilho.scrollWidth - trilho.clientWidth; }
+            function totalPaginas() { return Math.max(1, Math.ceil(trilho.scrollWidth / trilho.clientWidth - 0.02)); }
+            function paginaAtual() {
+                var max = maxScroll();
+                if (max <= 0) return 0;
+                return Math.round((trilho.scrollLeft / max) * (paginas - 1));
+            }
+            function irPara(i, suave) {
+                var destino = paginas > 1 ? (i / (paginas - 1)) * maxScroll() : 0;
+                trilho.scrollTo({ left: destino, behavior: suave && !semAnimacao ? 'smooth' : 'auto' });
+            }
+            function montarDots() {
+                paginas = totalPaginas();
+                dots.innerHTML = '';
+                for (var i = 0; i < paginas; i++) {
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.setAttribute('aria-label', 'Ir para os depoimentos ' + (i + 1));
+                    b.dataset.i = i;
+                    dots.appendChild(b);
+                }
+                marcar();
+            }
+            function marcar() {
+                var atual = paginaAtual();
+                Array.prototype.forEach.call(dots.children, function (b, i) {
+                    b.setAttribute('aria-current', i === atual ? 'true' : 'false');
+                });
+            }
+            function avancar() {
+                var proxima = paginaAtual() + 1;
+                irPara(proxima >= paginas ? 0 : proxima, true);
+            }
+            function tocar() { if (semAnimacao || timer) return; timer = setInterval(avancar, INTERVALO); }
+            function pausar() { clearInterval(timer); timer = null; }
 
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
-        <div class="row pt-5">
-            <div class="col-lg-3 col-md-6 mb-5">
-                <a href="#" class="navbar-brand">
-                    <h1 class="text-primary"><span class="text-white">TravelBuena</span>Vista</h1>
-                </a>
-                <p>Nossa agência dedica-se a oferecer experiências únicas, priorizando o cliente e criando momentos
-                    inesquecíveis.</p>
-                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Siga-nos</h6>
-                <div class="d-flex justify-content-start">
-                    <a class="btn btn-outline-primary btn-square mr-2" href="https://contate.me/travelbuenavista"
-                        target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a class="btn btn-outline-primary btn-square mr-2" href="https://www.facebook.com/travelbuenavista"
-                        target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-primary btn-square" href="https://www.instagram.com/travelbuenavista/"
-                        target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Nossos Serviços</h5>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Pacotes</a>
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Resorts</a>
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Cruzeiros</a>
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Aéreo</a>
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Pousadas</a>
-                    <a class="text-white-50 mb-2" href="#service"><i class="fa fa-angle-right mr-2"></i>Excursões</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Links Úteis</h5>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-white-50 mb-2" href="about.html"><i class="fa fa-angle-right mr-2"></i>Sobre</a>
-                    <a class="text-white-50 mb-2" href="destination.html"><i
-                            class="fa fa-angle-right mr-2"></i>Destino</a>
-                    <a class="text-white-50 mb-2" href="service.html"><i class="fa fa-angle-right mr-2"></i>Serviços</a>
-                    <a class="text-white-50 mb-2" href="package.html"><i class="fa fa-angle-right mr-2"></i>Pacotes</a>
-                    <a class="text-white-50 mb-2" href="guide.html"><i class="fa fa-angle-right mr-2"></i>Guias</a>
-                    <a class="text-white-50 mb-2" href="testimonial.html"><i
-                            class="fa fa-angle-right mr-2"></i>Depoimentos</a>
-                    <a class="text-white-50" href="blog.html"><i class="fa fa-angle-right mr-2"></i>Blog</a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Contato</h5>
-                <p><i class="fa fa-map-marker-alt mr-2"></i>São Paulo - SP | Brasil</p>
-                <a target="_blank" href="https://www.instagram.com/travelbuenavista/" class="text-white-50">
-                    <p><i class="fab fa-instagram mr-2"></i>@travelbuenavista</p>
-                </a>
-                <p><i class="fab fa-whatsapp mr-2"></i>(11) 97673-2628</p>
-                <p><i class="fa fa-envelope mr-2"></i>contato@tbvtagencia.com</p>
-                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Newsletter</h6>
-                <div class="w-100">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-light" style="padding: 25px;"
-                            placeholder="Seu Email">
-                        <div class="input-group-append">
-                            <a href="mailto:contato@tbvtagencia.com"
-                                class="btn btn-outline-primary pt-3 px-3">Inscreva-se</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5"
-        style="border-color: rgba(256, 256, 256, .1) !important;">
-        <div class="row">
-            <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-                <p class="m-0 text-white-50">Copyright &copy; <a href="#">TravelBuena</a>. Todos os Direitos
-                    Reservados.</a>
-                </p>
-            </div>
-            <div class="col-lg-6 text-center text-md-right">
-                <p class="m-0 text-white-50">Trabalho por <a class="text-white-50"
-                        href="https://kawanwagnner.github.io/Portfolio/" target="_blank">Kawan Wnn.</a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
+            dots.addEventListener('click', function (e) {
+                var b = e.target.closest('button');
+                if (b) irPara(Number(b.dataset.i), true);
+            });
+            ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(function (ev) {
+                trilho.addEventListener(ev, pausar, { passive: true });
+            });
+            ['mouseleave', 'focusout'].forEach(function (ev) {
+                trilho.addEventListener(ev, tocar, { passive: true });
+            });
+            document.addEventListener('visibilitychange', function () { document.hidden ? pausar() : tocar(); });
+            trilho.addEventListener('scroll', marcar, { passive: true });
+            window.addEventListener('resize', function () { montarDots(); irPara(paginaAtual(), false); });
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!-- Javascript -->
-    <script src="js/main.js"></script>
+            montarDots();
+            tocar();
+        })();
+    </script>
     <script defer src="js/form.js"></script>
 </body>
 

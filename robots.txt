@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
 
-# Ainda com conteúdo de template (lorem ipsum) — não indexar.
-Disallow: /single.html
-
 Sitemap: https://www.tbvtagencia.com/sitemap.xml
