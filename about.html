@@ -176,7 +176,7 @@
             </div>
             <!-- Depoimentos reais de clientes: texto transcrito na íntegra do
                  site antigo. Não editar, encurtar nem parafrasear. -->
-            <div class="quotes" id="quotes" tabindex="0" role="region" aria-label="Depoimentos de clientes">
+            <div class="quotes" data-carrossel data-dots="quotesDots" tabindex="0" role="region" aria-label="Depoimentos de clientes">
                 <blockquote class="quote">
                     <div class="quote-stars">★★★★★</div>
                     <p>"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível."<br>"Obrigada Thiago! Foi uma viagem incrivel. Nos ajudou muito!!! Super recomendo!"</p>
@@ -343,75 +343,7 @@
             });
         })();
     </script>
-    <script>
-        // Carrossel de depoimentos: autoplay + loop + bolinhas, como o
-        // owl.carousel do site antigo — mas sem jQuery e sem a lib (~250KB).
-        // O deslize é scroll-snap nativo: arrastar no touch, roda do mouse e
-        // teclado funcionam sem código extra.
-        (function () {
-            var trilho = document.getElementById('quotes');
-            var dots = document.getElementById('quotesDots');
-            if (!trilho || !dots) return;
-
-            var INTERVALO = 5000;
-            var timer = null;
-            var paginas = 1;
-            var semAnimacao = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            function maxScroll() { return trilho.scrollWidth - trilho.clientWidth; }
-            function totalPaginas() { return Math.max(1, Math.ceil(trilho.scrollWidth / trilho.clientWidth - 0.02)); }
-            function paginaAtual() {
-                var max = maxScroll();
-                if (max <= 0) return 0;
-                return Math.round((trilho.scrollLeft / max) * (paginas - 1));
-            }
-            function irPara(i, suave) {
-                var destino = paginas > 1 ? (i / (paginas - 1)) * maxScroll() : 0;
-                trilho.scrollTo({ left: destino, behavior: suave && !semAnimacao ? 'smooth' : 'auto' });
-            }
-            function montarDots() {
-                paginas = totalPaginas();
-                dots.innerHTML = '';
-                for (var i = 0; i < paginas; i++) {
-                    var b = document.createElement('button');
-                    b.type = 'button';
-                    b.setAttribute('aria-label', 'Ir para os depoimentos ' + (i + 1));
-                    b.dataset.i = i;
-                    dots.appendChild(b);
-                }
-                marcar();
-            }
-            function marcar() {
-                var atual = paginaAtual();
-                Array.prototype.forEach.call(dots.children, function (b, i) {
-                    b.setAttribute('aria-current', i === atual ? 'true' : 'false');
-                });
-            }
-            function avancar() {
-                var proxima = paginaAtual() + 1;
-                irPara(proxima >= paginas ? 0 : proxima, true);
-            }
-            function tocar() { if (semAnimacao || timer) return; timer = setInterval(avancar, INTERVALO); }
-            function pausar() { clearInterval(timer); timer = null; }
-
-            dots.addEventListener('click', function (e) {
-                var b = e.target.closest('button');
-                if (b) irPara(Number(b.dataset.i), true);
-            });
-            ['mouseenter', 'focusin', 'touchstart', 'pointerdown'].forEach(function (ev) {
-                trilho.addEventListener(ev, pausar, { passive: true });
-            });
-            ['mouseleave', 'focusout'].forEach(function (ev) {
-                trilho.addEventListener(ev, tocar, { passive: true });
-            });
-            document.addEventListener('visibilitychange', function () { document.hidden ? pausar() : tocar(); });
-            trilho.addEventListener('scroll', marcar, { passive: true });
-            window.addEventListener('resize', function () { montarDots(); irPara(paginaAtual(), false); });
-
-            montarDots();
-            tocar();
-        })();
-    </script>
+    <script defer src="js/carrossel.js"></script>
     <script defer src="js/form.js"></script>
 </body>
 

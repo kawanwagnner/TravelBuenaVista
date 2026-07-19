@@ -172,6 +172,45 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   color: var(--ink);
 }
 
+/* ---------- Carrossel do hero ---------- */
+.hero-shell { position: relative; }
+
+.hero-carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.hero-carousel::-webkit-scrollbar { display: none; }
+.hero-carousel > .hero { scroll-snap-align: start; }
+
+.hero-dots {
+  position: absolute;
+  left: 0; right: 0;
+  /* Acima da barra de confiança, que sobe -4.5rem sobre o hero. Sem essa
+     folga ela cobria as bolinhas e roubava o clique. */
+  bottom: 6rem;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: .55rem;
+}
+.hero-dots button {
+  width: 11px; height: 11px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .45);
+  cursor: pointer;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.hero-dots button:hover { background: rgba(255, 255, 255, .7); }
+.hero-dots button[aria-current="true"] { background: var(--white); transform: scale(1.25); }
+.hero-dots button:focus-visible { outline: 3px solid var(--white); outline-offset: 3px; }
+
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
@@ -196,6 +235,7 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 }
 .hero > .wrap { position: relative; z-index: 1; }
 .hero h1 { color: var(--white); max-width: 15ch; }
+.hero-eyebrow { color: #bfdbfe; }
 .hero-lead { font-size: clamp(1.02rem, 1.8vw, 1.2rem); color: #e2e8f0; max-width: 52ch; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
 
@@ -671,6 +711,7 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   .nav-toggle { display: block; }
   .site-header .wrap { position: relative; }
   .trust { margin-top: -2.5rem; }
+  .hero-dots { bottom: 4rem; } /* a barra sobe menos aqui */
 }
 
 @media (prefers-reduced-motion: reduce) {
