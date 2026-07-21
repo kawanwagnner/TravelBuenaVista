@@ -1,0 +1,10 @@
+# Não publicar: são artefatos de desenvolvimento, não fazem parte do site.
+# Sem isto, o backup da home antiga ficaria acessível em /_backup/ e o
+# Google poderia indexar uma segunda versão da home (conteúdo duplicado).
+
+_backup/
+tools/
+docs/
+scss/
+serve.py
+.vscode/
