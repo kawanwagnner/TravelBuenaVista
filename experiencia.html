@@ -1,62 +1,22 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <title>TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais</title>
-    <meta name="description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://travel-buena-vista.vercel.app/">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Experiência — TravelBuenaVista</title>
+<meta name="description" content="Agência pequena, atenção grande. Sete continentes, roteiros montados do zero e acompanhamento antes, durante e depois da viagem." />
+<!-- página de preview: fora do índice até virar oficial -->
+<meta name="robots" content="noindex, nofollow" />
 
-    <!-- Open Graph / WhatsApp / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="TravelBuenaVista">
-    <meta property="og:locale" content="pt_BR">
-    <meta property="og:url" content="https://travel-buena-vista.vercel.app/">
-    <meta property="og:title" content="TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais">
-    <meta property="og:description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
-    <meta property="og:image" content="https://travel-buena-vista.vercel.app/img/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+<link rel="icon" href="img/favicon-travel.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais">
-    <meta name="twitter:description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
-    <meta name="twitter:image" content="https://travel-buena-vista.vercel.app/img/og-image.jpg">
-
-    <meta name="theme-color" content="#285fc2">
-    <link rel="icon" href="img/favicon-travel.png" type="image/png">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-    <link href="css/redesign.css" rel="stylesheet">
-    <link href="css/experiencia.css" rel="stylesheet">
-    <!-- Dados estruturados: ajuda o Google a exibir a agência em busca local -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "TravelAgency",
-      "name": "TravelBuenaVista",
-      "url": "https://travel-buena-vista.vercel.app/",
-      "image": "https://travel-buena-vista.vercel.app/img/og-image.jpg",
-      "email": "contato@tbvtagencia.com",
-      "telephone": "+5511976732628",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "São Paulo",
-        "addressRegion": "SP",
-        "addressCountry": "BR"
-      },
-      "sameAs": [
-        "https://www.instagram.com/travelbuenavista/",
-        "https://www.facebook.com/travelbuenavista"
-      ]
-    }
-    </script>
+<link rel="stylesheet" href="css/redesign.css" />
+<link rel="stylesheet" href="css/experiencia.css" />
 </head>
-
 
 <body class="xp">
 
@@ -382,125 +342,26 @@
   </div>
 </section>
 
-<!-- ====================== CTA + ORÇAMENTO ====================== -->
+<!-- ============================ CTA ============================ -->
 <section class="xp-cta">
   <div class="xp-wrap">
-    <div class="xp-cta__grid">
-
-      <div class="xp-cta__texto">
-        <span class="label label--brand">Orçamento sem compromisso</span>
-        <h2 class="display" data-split>Conta pra gente<br>pra onde você quer <em>ir</em>.</h2>
-        <p class="xp-cta__sub">Responde em poucos campos e a gente retorna com uma proposta montada no seu orçamento. Se preferir conversar agora, chama no WhatsApp.</p>
-        <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="xp-btn">
-          <i class="fab fa-whatsapp"></i> Prefiro o WhatsApp
-        </a>
-      </div>
-
-      <!-- Formulário de orçamento: preservado do index original, tratado na
-           linguagem nova. É a captação de lead da agência — não remover.
-           Depende de js/form.js e do #loadingModal lá embaixo. -->
-      <div class="xp-form">
-        <h3>Peça seu orçamento</h3>
-        <p class="xp-form__nota">Retornamos no mesmo dia útil.</p>
-
-        <form id="contactForm" novalidate>
-          <div class="field">
-            <label for="nome">Seu nome</label>
-            <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" autocomplete="name" required>
-            <p class="help-block"></p>
-          </div>
-          <div class="field">
-            <label for="email">Seu e-mail</label>
-            <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required>
-            <p class="help-block"></p>
-          </div>
-          <div class="field">
-            <label for="zap">Seu WhatsApp</label>
-            <input type="tel" id="zap" name="zap" placeholder="(11) 90000-0000" autocomplete="tel" required>
-            <p class="help-block"></p>
-          </div>
-          <div class="field">
-            <label for="quest">Para onde você quer ir?</label>
-            <textarea id="quest" name="quest" placeholder="Ex.: Cancún em julho, 2 adultos e 1 criança — e o que não pode faltar." required></textarea>
-            <p class="help-block"></p>
-          </div>
-          <button type="submit" class="xp-btn xp-btn--bloco">Quero meu orçamento</button>
-          <p class="xp-form__nota">Seus dados são usados só para responder este contato.</p>
-        </form>
-      </div>
-
+    <span class="label label--brand">Orçamento sem compromisso</span>
+    <h2 class="display" data-split>Conta pra gente<br>pra onde você quer <em>ir</em>.</h2>
+    <p class="xp-cta__sub" data-fade>Responde em poucos campos e a gente retorna com uma proposta montada no seu orçamento. Se preferir conversar agora, chama no WhatsApp.</p>
+    <div class="xp-cta__botoes">
+      <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="xp-btn">
+        <i class="fab fa-whatsapp"></i> Prefiro o WhatsApp
+      </a>
+      <a href="contact.html" class="xp-btn xp-btn--linha">Peça seu orçamento →</a>
     </div>
+    <p class="xp-nota">Retornamos no mesmo dia útil · <a href="index.html">voltar ao site</a></p>
   </div>
 </section>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="brand">TravelBuena<span>Vista</span></span>
-        <p>Agência de viagens com atendimento pessoal, roteiros sob medida e acompanhamento do começo ao fim.</p>
-        <div class="footer-social">
-          <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://www.instagram.com/travelbuenavista/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.facebook.com/travelbuenavista" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        </div>
-      </div>
-
-      <div>
-        <h4>Navegação</h4>
-        <ul>
-          <li><a href="about.html">Sobre nós</a></li>
-          <li><a href="service.html">Serviços</a></li>
-          <li><a href="package.html">Pacotes</a></li>
-          <li><a href="destination.html">Destinos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Mais</h4>
-        <ul>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="guide.html">Nossos guias</a></li>
-          <li><a href="testimonial.html">Depoimentos</a></li>
-          <li><a href="contact.html">Contato</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Contato</h4>
-        <ul>
-          <li><a href="mailto:contato@tbvtagencia.com"><i class="fa fa-envelope"></i> contato@tbvtagencia.com</a></li>
-          <li><a href="tel:+5511976732628"><i class="fa fa-phone-alt"></i> (11) 97673-2628</a></li>
-          <li><a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      &copy; TravelBuenaVista. Todos os direitos reservados.
-    </div>
-  </div>
-</footer>
-
-<a class="whats-float" href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- modal de retorno do formulário (usado por js/form.js) -->
-<div id="loadingModal" class="loading-modal">
-  <div class="loading-modal-content">
-    <div id="loaderIcon" class="loader-circle"></div>
-    <h2 id="modalTitle"></h2>
-    <p id="modalMessage"></p>
-  </div>
-</div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
 <script src="js/experiencia.js"></script>
-<script defer src="js/form.js"></script>
 </body>
 </html>

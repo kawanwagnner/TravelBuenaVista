@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais</title>
+    <meta name="description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://travel-buena-vista.vercel.app/">
+
+    <!-- Open Graph / WhatsApp / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TravelBuenaVista">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="https://travel-buena-vista.vercel.app/">
+    <meta property="og:title" content="TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais">
+    <meta property="og:description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
+    <meta property="og:image" content="https://travel-buena-vista.vercel.app/img/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TravelBuenaVista — Agência de Viagens | Pacotes Nacionais e Internacionais">
+    <meta name="twitter:description" content="Agência de viagens com atendimento personalizado: pacotes nacionais e internacionais, roteiros sob medida e suporte do início ao fim. Peça seu orçamento.">
+    <meta name="twitter:image" content="https://travel-buena-vista.vercel.app/img/og-image.jpg">
+
+    <meta name="theme-color" content="#285fc2">
+    <link rel="icon" href="img/favicon-travel.png" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <link href="css/redesign.css" rel="stylesheet">
+    <!-- Dados estruturados: ajuda o Google a exibir a agência em busca local -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "TravelBuenaVista",
+      "url": "https://travel-buena-vista.vercel.app/",
+      "image": "https://travel-buena-vista.vercel.app/img/og-image.jpg",
+      "email": "contato@tbvtagencia.com",
+      "telephone": "+5511976732628",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "São Paulo",
+        "addressRegion": "SP",
+        "addressCountry": "BR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/travelbuenavista/",
+        "https://www.facebook.com/travelbuenavista"
+      ]
+    }
+    </script>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <div class="wrap">
+            <div class="topbar-contact">
+                <a href="mailto:contato@tbvtagencia.com"><i class="fa fa-envelope"></i> contato@tbvtagencia.com</a>
+                <a href="tel:+5511976732628"><i class="fa fa-phone-alt"></i> (11) 97673-2628</a>
+            </div>
+            <div class="topbar-social">
+                <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/travelbuenavista/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.facebook.com/travelbuenavista" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <header class="site-header">
+        <div class="wrap">
+            <a href="index.html" class="brand">TravelBuena<span>Vista</span></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNav">
+                <i class="fa fa-bars"></i>
+            </button>
+            <nav class="nav" id="mainNav">
+                <a href="index.html" class="active" aria-current="page">Início</a>
+                <a href="about.html">Sobre</a>
+                <a href="service.html">Serviços</a>
+                <a href="package.html">Pacotes</a>
+                <a href="destination.html">Destinos</a>
+                <a href="blog.html">Blog</a>
+                <a href="contact.html">Contato</a>
+            </nav>
+            <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats header-cta">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- Carrossel do hero: os mesmos 2 slides do site antigo, com os
+         títulos originais. Sem owl.carousel e sem jQuery. -->
+    <div class="hero-shell">
+        <div class="hero-carousel" data-carrossel data-dots="heroDots" data-intervalo="6000"
+            role="region" aria-label="Destaques" aria-roledescription="carrossel">
+            <section class="hero" style="background-image: url('img/carosel1.webp')">
+                <div class="wrap">
+                    <span class="eyebrow hero-eyebrow">Passeios &amp; viagens</span>
+                    <h1>Vamos descobrir o mundo juntos</h1>
+                    <p class="hero-lead">Atendimento pessoal do primeiro contato ao dia da volta. Montamos o roteiro
+                        do seu jeito — nacional ou internacional — e acompanhamos você em cada etapa da viagem.</p>
+                    <div class="hero-actions">
+                        <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats btn-lg">
+                            <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                        </a>
+                        <a href="package.html" class="btn btn-ghost btn-lg">Ver pacotes</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hero" style="background-image: url('img/carosel2.webp')">
+                <div class="wrap">
+                    <span class="eyebrow hero-eyebrow">Passeios &amp; viagens</span>
+                    <h1>Descubra lugares incríveis conosco</h1>
+                    <p class="hero-lead">Atendimento pessoal do primeiro contato ao dia da volta. Montamos o roteiro
+                        do seu jeito — nacional ou internacional — e acompanhamos você em cada etapa da viagem.</p>
+                    <div class="hero-actions">
+                        <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats btn-lg">
+                            <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                        </a>
+                        <a href="package.html" class="btn btn-ghost btn-lg">Ver pacotes</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="hero-dots" id="heroDots"></div>
+    </div>
+
+    <div class="wrap">
+        <!-- Sem métricas: qualquer número aqui precisa vir da agência.
+             Estes quatro itens só reafirmam o que o site já descreve. -->
+        <div class="trust">
+            <div class="trust-item"><i class="fab fa-whatsapp"></i><span>Atendimento direto no WhatsApp</span></div>
+            <div class="trust-item"><i class="fa fa-route"></i><span>Roteiros montados sob medida</span></div>
+            <div class="trust-item"><i class="fa fa-globe-americas"></i><span>Destinos nacionais e internacionais</span></div>
+            <div class="trust-item"><i class="fa fa-user-friends"></i><span>Acompanhamento durante a viagem</span></div>
+        </div>
+    </div>
+
+    <section id="destinos">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Destinos</span>
+                <h2>Explore o mundo com quem conhece</h2>
+                <p>Do Nordeste brasileiro ao Sudeste Asiático — escolha por onde começar e a gente monta o resto.</p>
+            </div>
+
+            <div class="grid grid-4">
+                <a class="dest" href="contact.html">
+                    <img src="img/brasil.webp" alt="Destinos no Brasil" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Brasil</strong><span>Praias, serra e ecoturismo</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-sul.webp" alt="Destinos na América do Sul" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América do Sul</strong><span>Vizinhos que surpreendem</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-norte.webp" alt="Destinos na América do Norte" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América do Norte</strong><span>EUA, Canadá e México</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/america-central.webp" alt="Destinos na América Central" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>América Central</strong><span>Caribe e Cancún</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/europa.webp" alt="Destinos na Europa" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Europa</strong><span>História, arte e gastronomia</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/asia.webp" alt="Destinos na Ásia" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Ásia</strong><span>Tailândia, Japão e Israel</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/africa.webp" alt="Destinos na África" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>África</strong><span>Egito e safáris</span></span>
+                </a>
+                <a class="dest" href="contact.html">
+                    <img src="img/oceania.webp" alt="Destinos na Oceania" loading="lazy" decoding="async">
+                    <span class="dest-label"><strong>Oceania</strong><span>Austrália e Nova Zelândia</span></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="servicos">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Serviços</span>
+                <h2>Tudo resolvido em um lugar só</h2>
+                <p>Você diz o que quer viver; a gente monta, ajusta e acompanha. Tem cliente no terceiro ano
+                    consecutivo viajando com a TravelBuenaVista.</p>
+            </div>
+
+            <div class="grid servicos-grid">
+                <div class="card card-destaque">
+                    <div class="card-icon"><i class="fa fa-suitcase-rolling"></i></div>
+                    <h3>Pacotes nacionais e internacionais</h3>
+                    <p>Voo, hospedagem e passeios fechados de uma vez — e refeitos quantas vezes precisar, até o
+                        roteiro ficar do seu jeito.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-hotel"></i></div>
+                    <h3>Resorts e hotéis</h3>
+                    <p>De resort em Cancún a hotel em Londres. A escolha começa por uma pergunta: você quer
+                        estrutura, localização ou sossego?</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-ship"></i></div>
+                    <h3>Cruzeiros</h3>
+                    <p>Vários destinos sem desfazer a mala uma vez sequer. Cabine, embarque e passeios em terra
+                        resolvidos antes de você subir a bordo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-plane-departure"></i></div>
+                    <h3>Aéreo nacional e internacional</h3>
+                    <p>Conexão de madrugada sai barata na tela e cara na viagem. Comparamos rota e tarifa levando as
+                        duas coisas em conta.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa fa-tree"></i></div>
+                    <h3>Pousadas</h3>
+                    <p>Para quem prefere o destino ao lobby do hotel: hospedagem menor, com jeito de casa e gente da
+                        região por perto.</p>
+                </div>
+                <div class="card card-destaque">
+                    <div class="card-icon"><i class="fa fa-users"></i></div>
+                    <h3>Excursões</h3>
+                    <p>Grupo acompanhado pelo Thiago do embarque à volta — a mesma pessoa que montou o roteiro
+                        está no aeroporto com você.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <div class="about">
+                <div class="about-media">
+                    <img src="img/about.webp" alt="Avião no céu com a mensagem: é hora de viajar, reserve!" loading="lazy" decoding="async">
+                </div>
+                <div>
+                    <span class="eyebrow">Quem somos</span>
+                    <h2>Agência pequena, atenção grande</h2>
+                    <p>Somos uma agência cuja essência é tratar bem o cliente e tornar sua viagem inesquecível.
+                        Prezamos pelo bom atendimento e nos esforçamos para que todas as pessoas tenham o prazer de
+                        viajar e queiram retornar para outras viagens no futuro.</p>
+                    <ul>
+                        <li><i class="fa fa-check-circle"></i><span>Roteiro montado do zero, no seu orçamento</span></li>
+                        <li><i class="fa fa-check-circle"></i><span>Acompanhamento antes, durante e depois</span></li>
+                        <li><i class="fa fa-check-circle"></i><span>Clientes que voltam ano após ano</span></li>
+                    </ul>
+
+                    <div class="about-thumbs">
+                        <img src="img/about-1.webp" alt="Taj Mahal, na Índia" loading="lazy" decoding="async">
+                        <img src="img/about-2.webp" alt="Barco tradicional em praia da Tailândia" loading="lazy" decoding="async">
+                    </div>
+
+                    <a href="contact.html" class="btn btn-primary btn-lg">Pedir meu orçamento</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos" class="section-soft">
+        <div class="wrap">
+            <div class="section-head center">
+                <span class="eyebrow">Depoimentos</span>
+                <h2>Quem viajou, conta</h2>
+            </div>
+
+            <!-- Depoimentos reais de clientes: texto transcrito na íntegra do
+                 site antigo. Não editar, encurtar nem parafrasear. -->
+            <div class="quotes" data-carrossel data-dots="quotesDots" tabindex="0" role="region" aria-label="Depoimentos de clientes">
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Obrigada por todo suporte de sempre!!! Foi uma viagem inesquecível."<br>"Obrigada Thiago! Foi uma viagem incrivel. Nos ajudou muito!!! Super recomendo!"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/vivi.webp" alt="Vivi e Sueli, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Vivi &amp; Sueli</strong><span>Clientes</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Mais uma viagem inesquecível, sempre contando com a segurança e todos os serviços da TravelBuenaVista e do meu amigo Thiago Ribeiro"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/sem-nome1.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Mais uma vez (terceiro ano consecutivo), realizei um grande sonho através da Travel Buena Vista. O excelente serviço da Travel e o acompanhamento profissional do amigo Thiago me proporcionaram conhecer e aprender mais sobre a cultura e a história da Grécia. Viagem incrível. Assistência perfeita. Muito obrigada, Travel Buena Vista!"</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/andreia.webp" alt="Andreia, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Andreia</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+
+                <blockquote class="quote">
+                    <div class="quote-stars">★★★★★</div>
+                    <p>"Deu tudo certo, aproveitamos bastante."</p>
+                    <footer class="quote-author">
+                        <img src="img/comments/tati.webp" alt="Tati Torricelli, cliente da TravelBuenaVista" loading="lazy" decoding="async">
+                        <span><strong>Tati Torricelli</strong><span>Cliente</span></span>
+                    </footer>
+                </blockquote>
+            </div>
+
+            <div class="quotes-dots" id="quotesDots"></div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="wrap">
+            <div>
+                <span class="eyebrow">Orçamento sem compromisso</span>
+                <h2>Conta pra gente pra onde você quer ir</h2>
+                <p>Responde em poucos campos e a gente retorna com uma proposta montada no seu orçamento. Se preferir
+                    conversar agora, chama no WhatsApp.</p>
+                <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" class="btn btn-whats btn-lg">
+                    <i class="fab fa-whatsapp"></i> Prefiro o WhatsApp
+                </a>
+            </div>
+
+            <div class="form-card">
+                <h3>Peça seu orçamento</h3>
+                <p>Retornamos no mesmo dia útil.</p>
+
+                <form id="contactForm" novalidate>
+                    <div class="field">
+                        <label for="nome">Seu nome</label>
+                        <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" autocomplete="name" required>
+                        <p class="help-block"></p>
+                    </div>
+                    <div class="field">
+                        <label for="email">Seu e-mail</label>
+                        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required>
+                        <p class="help-block"></p>
+                    </div>
+                    <div class="field">
+                        <label for="zap">Seu WhatsApp</label>
+                        <input type="tel" id="zap" name="zap" placeholder="(11) 90000-0000" autocomplete="tel" required>
+                        <p class="help-block"></p>
+                    </div>
+                    <div class="field">
+                        <label for="quest">Para onde você quer ir?</label>
+                        <textarea id="quest" name="quest" placeholder="Ex.: Cancún em julho, 2 adultos e 1 criança — e o que não pode faltar." required></textarea>
+                        <p class="help-block"></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Quero meu orçamento</button>
+                    <p class="form-note">Seus dados são usados só para responder este contato.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="brand">TravelBuena<span>Vista</span></span>
+                    <p>Agência de viagens com atendimento pessoal, roteiros sob medida e acompanhamento do começo ao fim.</p>
+                    <div class="footer-social">
+                        <a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/travelbuenavista/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/travelbuenavista" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="about.html">Sobre nós</a></li>
+                        <li><a href="service.html">Serviços</a></li>
+                        <li><a href="package.html">Pacotes</a></li>
+                        <li><a href="destination.html">Destinos</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Mais</h4>
+                    <ul>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="guide.html">Nossos guias</a></li>
+                        <li><a href="testimonial.html">Depoimentos</a></li>
+                        <li><a href="contact.html">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="mailto:contato@tbvtagencia.com"><i class="fa fa-envelope"></i> contato@tbvtagencia.com</a></li>
+                        <li><a href="tel:+5511976732628"><i class="fa fa-phone-alt"></i> (11) 97673-2628</a></li>
+                        <li><a href="https://contate.me/travelbuenavista" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                &copy; TravelBuenaVista. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <a class="whats-float" href="https://contate.me/travelbuenavista" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <div id="loadingModal" class="loading-modal">
+        <div class="loading-modal-content">
+            <div id="loaderIcon" class="loader-circle"></div>
+            <h2 id="modalTitle"></h2>
+            <p id="modalMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        // Menu mobile — sem jQuery.
+        (function () {
+            var botao = document.getElementById('navToggle');
+            var menu = document.getElementById('mainNav');
+            if (!botao || !menu) return;
+            botao.addEventListener('click', function () {
+                var aberto = menu.classList.toggle('open');
+                botao.setAttribute('aria-expanded', aberto);
+            });
+            menu.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A') menu.classList.remove('open');
+            });
+        })();
+    </script>
+    <script defer src="js/carrossel.js"></script>
+    <script defer src="js/revelar.js"></script>
+    <script defer src="js/form.js"></script>
+</body>
+
+</html>

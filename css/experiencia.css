@@ -1,0 +1,426 @@
+/* ==========================================================================
+   TravelBuenaVista — página "Experiência" (preview imersivo)
+   Aplica a técnica do awwwards-kit à marca existente.
+
+   Decisões guiadas pelo corpus do reference-miner (9 estúdios top):
+     · fundo CLARO — 67% das referências são claras, e é a marca daqui
+     · SEM cursor custom e SEM textura de grão — 0% do corpus usa
+     · página curta — a mediana real é 2.3× o viewport
+     · camada WebGL — 78% do corpus tem shader GLSL
+   Mantém a cor da marca (#285fc2) e a Poppins. Arquivo isolado:
+   não toca em style.css nem em redesign.css.
+   ========================================================================== */
+
+.xp {
+  --brand: #285fc2;
+  --brand-dark: #1b428c;
+  --amber: #f59e0b;
+  --ink: #0f172a;
+  --body: #475569;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --paper: #ffffff;
+  --paper-2: #f8fafc;
+
+  /* escala mais apertada que a do site: o corpus deu razão ~1.2 */
+  /* teto menor que o do kit: o título aqui tem 2 linhas longas
+     ("Vamos descobrir / o mundo juntos") e a 8.5rem ficava apertado */
+  --fs-display: clamp(2.6rem, 7.4vw, 7rem);
+  --fs-h2: clamp(1.9rem, 4.5vw, 3.6rem);
+  --fs-lead: clamp(1.05rem, 1.5vw, 1.35rem);
+  --fs-mono: .72rem;
+
+  --track-tight: -.04em;   /* corpus: display premium vive entre -.02 e -.04em */
+  --track-wide: .18em;
+
+  --xp-wrap: min(1480px, 92vw);   /* corpus: mediana de container 1480px */
+  --section: clamp(5rem, 11vh, 9rem);
+  --ease: cubic-bezier(.22,1,.36,1);
+
+  color: var(--body);
+  background: var(--paper);
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+
+.xp-wrap { width: var(--xp-wrap); margin-inline: auto; }
+
+.xp .label {
+  font-size: var(--fs-mono); text-transform: uppercase;
+  letter-spacing: var(--track-wide); color: var(--muted);
+  font-weight: 500;
+}
+.xp .label--brand { color: var(--brand); }
+
+.xp .display {
+  font-weight: 700; line-height: 1.06;   /* .95 apertava demais em PT-BR */
+  letter-spacing: var(--track-tight); color: var(--ink);
+  margin: 0;
+}
+.xp .display em { font-style: normal; color: var(--brand); }
+
+/* A máscara do reveal corta o que passa da caixa da linha: acento de "ó",
+   cedilha de "Serviços", perna do "j". O padding abre espaço e a margem
+   negativa devolve, então nada se move no layout. */
+.xp .reveal {
+  display: block; overflow: hidden;
+  padding: .14em 0 .20em;
+  margin: -.14em 0 -.20em;
+}
+
+/* ============================ HERO ============================ */
+/* full-bleed: NÃO colocar max-width aqui, senão o overflow:hidden
+   recorta o canvas do shader. O wrap vive no __inner. */
+/* O hero não começa no topo da página: a topbar + o header sticky ocupam
+   ~120px antes dele. Usar 100svh aqui estouraria a primeira tela e cortaria
+   o conteúdo. `--xp-topo` é medido no JS (e re-medido no resize). */
+.xp-hero {
+  position: relative;
+  min-height: calc(100svh - var(--xp-topo, 120px));
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-bottom: clamp(2rem, 5vh, 4rem);
+  background: var(--paper);
+}
+.xp-hero__canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 0; display: block;
+}
+/* rota de voo — entre o shader e o conteúdo */
+.xp-rota {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+  color: var(--brand);            /* currentColor alimenta traço e avião */
+  opacity: .5;
+}
+.xp-rota #xpAviao { opacity: 0; }  /* o JS revela quando começa a voar */
+
+.xp-hero__inner { position: relative; z-index: 1; width: var(--xp-wrap); margin-inline: auto; }
+.xp-hero__eyebrow { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.xp-hero__title { font-size: var(--fs-display); }
+.xp-hero__meta {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+  margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+}
+.xp-hero__meta p { max-width: 38ch; margin: 0; color: var(--body); }
+
+/* ============================ NÚMEROS ============================ */
+.xp-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem; padding: var(--section) 0; border-bottom: 1px solid var(--line);
+}
+.xp-stat__n {
+  font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700;
+  letter-spacing: var(--track-tight); color: var(--ink); line-height: 1;
+}
+.xp-stat__n span { color: var(--amber); }
+.xp-stat p { margin: .5rem 0 0; color: var(--muted); }
+
+/* =================== SCROLL HORIZONTAL (continentes) =================== */
+/* Scroll horizontal por STICKY, não por pin do ScrollTrigger.
+   O pin cria um "pin-spacer" e reposiciona o elemento — o que briga com o
+   header fixo do site e depende de medir o layout na hora certa (deu buraco
+   branco e start negativo). Sticky é CSS puro: o browser cuida do travamento
+   e o GSAP só anima o X. A altura da seção é definida no JS:
+   altura = viewport + distância horizontal a percorrer. */
+.xp-hscroll { background: var(--paper-2); position: relative; }
+.xp-hscroll__sticky {
+  position: sticky; top: 0;
+  height: 100svh; overflow: hidden;
+  display: flex; align-items: center;
+}
+.xp-hscroll__track {
+  display: flex; align-items: center;
+  padding-inline: clamp(1.5rem, 4vw, 4rem); gap: clamp(1.5rem, 3vw, 3.5rem);
+  will-change: transform;
+}
+.xp-intro {
+  flex: 0 0 auto; width: min(38vw, 440px);
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.xp-intro h2 { font-size: var(--fs-h2); }
+.xp-intro p { color: var(--body); max-width: 34ch; margin: 0; }
+
+.xp-panel {
+  position: relative; flex: 0 0 auto;
+  width: min(38vw, 470px); height: 60vh;
+  border-radius: 20px; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  box-shadow: 0 12px 24px rgba(15,23,42,.1), 0 32px 64px rgba(15,23,42,.12);
+}
+/* teto de 72vh: o header do site é fixo e come o topo da área visível */
+.xp-panel--tall { height: 72vh; }
+/* bleed lateral maior que o deslocamento do parallax, senão descobre a borda.
+   Ver a conta em js/experiencia.js. */
+.xp-panel__img {
+  position: absolute; inset: -8% -20%;
+  background-size: cover; background-position: center;
+  will-change: transform;
+}
+.xp-panel__veu {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,23,42,.82) 0%, rgba(15,23,42,.25) 45%, transparent 75%);
+}
+.xp-panel__cap { position: relative; z-index: 2; padding: 1.6rem; color: #fff; }
+/* o redesign.css define `h3 { color: var(--ink) }` direto no elemento, e regra
+   de elemento vence herança — por isso a cor precisa ser explícita aqui. */
+.xp-panel__cap h3 {
+  font-size: clamp(1.3rem, 2vw, 1.9rem); font-weight: 700;
+  letter-spacing: -.02em; margin: 0 0 .2rem;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(15,23,42,.45);
+}
+.xp-panel__cap span { font-size: var(--fs-mono); text-transform: uppercase; letter-spacing: var(--track-wide); opacity: .85; }
+
+/* ============================ DESTAQUE ============================ */
+.xp-destaque { padding: var(--section) 0; }
+.xp-destaque__grid {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  gap: clamp(2rem, 4vw, 4rem) 2rem; align-items: center;
+}
+/* 16/11 — casa com a proporção nativa da ceu-floresta.webp (1672×941).
+   Frame retrato aqui obrigaria a esticar a foto e ela borra. */
+.xp-destaque__media {
+  grid-column: 1 / 7; position: relative; overflow: hidden;
+  border-radius: 20px; aspect-ratio: 16/11;
+}
+.xp-destaque__media > div {
+  position: absolute; inset: -12%;
+  background-size: cover; background-position: center; will-change: transform;
+}
+.xp-destaque__texto { grid-column: 8 / 13; }
+/* +.2em para compensar a margem negativa da máscara do reveal, que puxa
+   o conteúdo seguinte para cima e colava o parágrafo no título. */
+.xp-destaque__texto h2 { font-size: var(--fs-h2); margin-bottom: calc(1.4rem + .2em); }
+.xp-destaque__texto p { color: var(--body); margin-bottom: 1rem; }
+
+.xp-lista { list-style: none; padding: 0; margin: 2rem 0 0; }
+.xp-lista li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: .9rem 0; border-top: 1px solid var(--line); color: var(--ink);
+}
+.xp-lista li span:last-child { color: var(--muted); font-size: .9rem; }
+
+/* ============================ MANIFESTO ============================ */
+.xp-manifesto { padding: var(--section) 0; border-bottom: 1px solid var(--line); }
+.xp-manifesto__txt {
+  margin: 1.4rem 0 0; max-width: 22ch;
+  font-size: clamp(1.8rem, 4.2vw, 3.4rem); font-weight: 600;
+  line-height: 1.12; letter-spacing: -.03em; color: var(--ink);
+}
+.xp-manifesto__txt em { font-style: normal; color: var(--brand); }
+
+/* ============================ CABEÇALHO DE SEÇÃO ============================ */
+.xp-sec-head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 2rem; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); flex-wrap: wrap;
+}
+.xp-sec-head h2 { font-size: var(--fs-h2); margin-top: .6rem; padding-bottom: .2em; }
+.xp-sec-head > p { color: var(--body); max-width: 38ch; margin: 0; }
+
+/* ============================ SERVIÇOS ============================ */
+.xp-servicos { padding: var(--section) 0; }
+.xp-servicos__lista { list-style: none; margin: 0; padding: 0; }
+.xp-servicos__lista li {
+  display: grid; grid-template-columns: 5rem 1fr; gap: 1.5rem;
+  padding: clamp(1.6rem, 3vw, 2.4rem) 0; border-top: 1px solid var(--line);
+  transition: background .35s var(--ease);
+}
+.xp-servicos__lista li:last-child { border-bottom: 1px solid var(--line); }
+.xp-servicos__lista li:hover { background: var(--paper-2); }
+.xp-servicos__n {
+  font-size: var(--fs-mono); letter-spacing: var(--track-wide);
+  color: var(--brand); font-weight: 600; padding-top: .45rem;
+}
+.xp-servicos__lista h3 {
+  font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 600;
+  letter-spacing: -.02em; color: var(--ink); margin: 0 0 .4rem;
+}
+.xp-servicos__lista p { color: var(--body); margin: 0; max-width: 62ch; }
+
+/* ============================ DEPOIMENTOS ============================ */
+.xp-depoimentos { padding: var(--section) 0; background: var(--paper-2); }
+
+.xp-estrelas { color: var(--amber); letter-spacing: .14em; font-size: .95rem; }
+
+/* --- FALA: depoimento como peça editorial, alternando o lado ---
+   Cada fala ocupa quase uma tela e fica centrada verticalmente: assim
+   só uma aparece por vez e o desfoque de saída (data-desfoca) tem espaço
+   para acontecer antes da próxima entrar. */
+.xp-fala {
+  min-height: 78vh;
+  margin: 0 0 clamp(3rem, 8vh, 7rem);   /* respiro entre uma fala e outra */
+  display: flex; flex-direction: column; justify-content: center;
+}
+.xp-fala p {
+  font-size: clamp(1.3rem, 2.7vw, 2.35rem);
+  line-height: 1.36; letter-spacing: -.02em;
+  font-weight: 500; color: var(--ink);
+  margin: 0 0 1.8rem;
+  max-width: 30ch;              /* medida de leitura para citação grande */
+}
+/* aspa decorativa. line-height:0 + vertical-align impedem que ela
+   estique a altura da linha do texto ao redor. */
+.xp-fala__aspa {
+  font-size: 2.1em; line-height: 0; vertical-align: -.38em;
+  color: var(--brand); opacity: .3; font-weight: 700;
+}
+.xp-fala__aspa--fim { vertical-align: -.42em; margin-left: .04em; }
+
+.xp-fala footer { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+.xp-fala footer img {
+  width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+}
+.xp-fala footer > span:not(.xp-estrelas) { display: flex; flex-direction: column; line-height: 1.35; }
+.xp-fala footer strong { color: var(--ink); font-weight: 600; font-size: 1.02rem; }
+.xp-fala footer span span { font-size: .84rem; color: var(--muted); }
+.xp-fala footer .xp-estrelas { margin-left: auto; }
+
+/* a segunda vai para a direita — quebra o eixo e cria ritmo na página */
+.xp-fala--direita { text-align: right; }
+.xp-fala--direita p { margin-left: auto; }
+.xp-fala--direita footer { flex-direction: row-reverse; justify-content: flex-start; }
+.xp-fala--direita footer > span:not(.xp-estrelas) { align-items: flex-end; }
+/* Espelhar literalmente jogaria as estrelas para a borda esquerda, sob
+   espaço vazio — ficavam órfãs. Aqui elas ficam junto do autor. */
+.xp-fala--direita footer .xp-estrelas { margin-left: 0; margin-right: .4rem; }
+
+/* --- os demais: colunas separadas por fio, sem caixa --- */
+.xp-quotes {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1.8rem, 3.5vw, 3.5rem); align-items: start;
+}
+.xp-quote {
+  margin: 0; padding-top: 2rem;
+  border-top: 1px solid var(--line);     /* fio no lugar da borda do cartão */
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+/* Com só dois nesta fila sobra largura — o texto pode (e deve) ser maior,
+   senão eles somem visualmente depois das falas em destaque. */
+.xp-quote p {
+  color: var(--ink); font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.5; letter-spacing: -.01em;
+  margin: 1.1rem 0 1.8rem;
+}
+.xp-quote .xp-estrelas { font-size: 1.1rem; }
+.xp-quote footer { display: flex; align-items: center; justify-content: center; gap: .9rem; }
+.xp-quote footer img {
+  width: 54px; height: 54px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+}
+.xp-quote footer span { display: flex; flex-direction: column; line-height: 1.3; }
+.xp-quote footer strong { color: var(--ink); font-weight: 600; font-size: 1.05rem; }
+.xp-quote footer span span { font-size: .88rem; color: var(--muted); }
+
+/* destaque com a imagem do outro lado — quebra o ritmo da página */
+.xp-destaque--invertido .xp-destaque__media { grid-column: 7 / 13; order: 2; }
+.xp-destaque--invertido .xp-destaque__texto { grid-column: 1 / 6; order: 1; }
+
+/* ============================ CTA ============================ */
+.xp-cta { padding: var(--section) 0; text-align: center; background: var(--paper-2); }
+.xp-cta h2 { font-size: clamp(2.2rem, 6vw, 5rem); padding-bottom: .2em; }
+.xp-btn {
+  display: inline-flex; align-items: center; gap: .7rem;
+  margin-top: 2rem; padding: 1.1rem 2.4rem; border-radius: 100px;
+  background: var(--brand); color: #fff; font-weight: 600;
+  transition: background .35s var(--ease), transform .35s var(--ease);
+}
+.xp-btn:hover { background: var(--brand-dark); transform: translateY(-2px); }
+/* variante secundária: contorno, para não competir com o CTA principal */
+.xp-btn--linha {
+  background: transparent; color: var(--brand);
+  border: 1px solid var(--brand); font-weight: 500;
+}
+.xp-btn--linha:hover { background: var(--brand); color: #fff; }
+
+/* CTA em duas colunas quando há formulário (home). Sem data-desfoca aqui:
+   embaçar um formulário atrapalha quem está preenchendo. */
+.xp-cta__grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(2.5rem, 5vw, 5rem); align-items: start; text-align: left;
+}
+.xp-cta__grid .xp-cta__sub { margin-inline: 0; }
+.xp-cta__texto h2 { padding-bottom: .2em; }
+
+.xp-form {
+  background: var(--paper); border-radius: 22px;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 18px 48px rgba(15,23,42,.10);
+}
+.xp-form h3 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 700;
+  letter-spacing: -.02em; color: var(--ink); margin: 0 0 .3rem;
+}
+.xp-form__nota { font-size: .86rem; color: var(--muted); margin: 0 0 1.4rem; }
+.xp-form .field { margin-bottom: 1.1rem; }
+.xp-form label {
+  display: block; font-size: var(--fs-mono); text-transform: uppercase;
+  letter-spacing: var(--track-wide); color: var(--muted);
+  font-weight: 500; margin-bottom: .45rem;
+}
+.xp-form input, .xp-form textarea {
+  width: 100%; font: inherit; color: var(--ink);
+  background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: 12px; padding: .85rem 1rem;
+  transition: border-color .25s var(--ease), background .25s var(--ease);
+}
+.xp-form input:focus, .xp-form textarea:focus {
+  outline: none; border-color: var(--brand); background: var(--paper);
+}
+.xp-form textarea { min-height: 118px; resize: vertical; }
+.xp-form .help-block { font-size: .8rem; color: #dc2626; margin: .35rem 0 0; }
+.xp-btn--bloco { width: 100%; justify-content: center; margin-top: .5rem; }
+.xp-form form + .xp-form__nota, .xp-form form .xp-form__nota { margin-top: 1rem; margin-bottom: 0; }
+
+.xp-cta__sub { max-width: 52ch; margin: 1.4rem auto 0; color: var(--body); }
+.xp-cta__botoes { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.xp-nota { margin-top: 1.6rem; font-size: .85rem; color: var(--muted); }
+.xp-nota a { color: var(--brand); }
+
+@media (max-width: 820px) {
+  .xp-panel, .xp-intro { width: 78vw; }
+  .xp-destaque__media, .xp-destaque__texto,
+  .xp-destaque--invertido .xp-destaque__media,
+  .xp-destaque--invertido .xp-destaque__texto { grid-column: 1 / 13; order: initial; }
+  .xp-hero__meta { flex-direction: column; }
+  .xp-servicos__lista li { grid-template-columns: 3rem 1fr; gap: 1rem; }
+  .xp-sec-head { flex-direction: column; align-items: flex-start; }
+
+  /* Em tela estreita a fala da direita volta para a esquerda: texto
+     alinhado à direita em coluna curta fica difícil de ler, e o autor
+     espelhado aperta contra a borda. */
+  .xp-fala--direita { text-align: left; }
+  .xp-fala--direita p { margin-left: 0; }
+  .xp-fala--direita footer { flex-direction: row; }
+  .xp-fala--direita footer > span:not(.xp-estrelas) { align-items: flex-start; }
+  .xp-fala--direita footer .xp-estrelas { margin-right: 0; margin-left: auto; }
+  .xp-fala p { max-width: 100%; }
+  .xp-fala footer .xp-estrelas { flex-basis: 100%; margin-left: 0; }
+
+  /* No celular o hero é mais baixo e o conteúdo fica CENTRADO. Com
+     flex-end sobrava meia tela vazia acima do título. */
+  .xp-hero {
+    min-height: calc(88svh - var(--xp-topo, 120px));
+    justify-content: center;
+    padding-block: clamp(2rem, 8vh, 4rem);
+  }
+  .xp-hero__meta { gap: 1rem; }
+  .xp-fala { min-height: auto; padding-block: clamp(2rem, 6vh, 4rem); }
+
+  /* O texto de abertura do scroll horizontal sobe para o topo: centrado
+     numa tela alta e estreita ele deixava meia tela vazia acima.
+     Só o texto — os painéis seguem centrados verticalmente. */
+  .xp-intro {
+    align-self: flex-start;
+    justify-content: flex-start;
+    padding-top: clamp(1rem, 5vh, 2.5rem);
+  }
+
+  /* o formulário vai para baixo do texto no celular */
+  .xp-cta__grid { grid-template-columns: 1fr; }
+}
+
+/* respeita quem pediu menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .xp-hscroll__track { height: auto; flex-wrap: wrap; }
+  .xp-panel { width: 100%; height: 60vh; }
+}
