@@ -261,7 +261,10 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   padding: clamp(3rem, 7vw, 5rem) 0;
   color: var(--white);
   text-align: center;
-  background: var(--ink) center / cover no-repeat;
+  /* 72% e não center: o hero é uma faixa baixa, então o "cover" mostra só uma
+     banda estreita da imagem. Centralizado, sobrava a parte escura do meio da
+     foto — a água e o barco ficavam de fora do corte. */
+  background: var(--ink) center 72% / cover no-repeat;
 }
 .page-hero::after {
   content: '';
@@ -291,6 +294,12 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 
 /* ---------- Cartão de pessoa (guias) ---------- */
 .person {
+  /* O .grid-3 usa auto-fit: com um guia só, a coluna vira a largura inteira
+     e a foto fica gigante. O teto mantém o card no tamanho de sempre e o
+     centraliza — com três guias, cada um já cabe na sua coluna. */
+  max-width: 340px;
+  margin-inline: auto;
+  width: 100%;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -300,7 +309,7 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 }
 .person:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .person-media { aspect-ratio: 1; overflow: hidden; background: var(--bg-soft); }
-.person-media img { width: 100%; height: 100%; object-fit: cover; }
+.person-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .person-body { padding: 1.35rem; }
 .person-body h3 { margin-bottom: .2rem; font-size: 1.15rem; }
 .person-role { display: block; font-size: .88rem; color: var(--muted); margin-bottom: .9rem; }
@@ -561,7 +570,7 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
 .quote-author span { font-size: .84rem; color: var(--muted); }
 
 /* ---------- CTA + formulário ---------- */
-.cta { background: linear-gradient(135deg, var(--brand-dark), var(--brand)); color: var(--white); }
+/* O fundo do .cta é definido junto com o do .servicos, na regra .faixa-escura. */
 .cta .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(2rem, 5vw, 3.5rem); align-items: center; }
 .cta h2, .cta .eyebrow { color: var(--white); }
 .cta .eyebrow { opacity: .85; }
@@ -714,10 +723,137 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   .hero-dots { bottom: 4rem; } /* a barra sobe menos aqui */
 }
 
+/* ---------- Seção de serviços (banda escura + bento) ----------
+   Na home esta seção fica entre duas seções cheias de foto (destinos e
+   "Sobre"). Como card branco no meio disso some, ela vira uma faixa escura:
+   dá respiro, cria ritmo na página e destaca os serviços sem competir por
+   imagem. Tudo escopado em .servicos — a classe .card é usada também em
+   about.html e destination.html e não pode mudar. */
+/* Um só lugar define a faixa escura — .servicos e .cta usam a mesma. Cópias
+   separadas divergem com o tempo, que é exatamente como o site acabou com
+   dois telefones diferentes. */
+.faixa-escura,
+.servicos,
+.cta {
+  position: relative;
+  isolation: isolate;
+  color: var(--white);
+  background:
+    radial-gradient(1100px 620px at 12% -15%, rgba(40, 95, 194, .55), transparent 62%),
+    radial-gradient(900px 520px at 98% 8%, rgba(245, 158, 11, .16), transparent 58%),
+    linear-gradient(180deg, #0b1730 0%, #0d2044 100%);
+}
+
+.servicos .eyebrow { color: #9dc0ff; }
+.servicos h2 { color: var(--white); }
+.servicos .section-head p { color: rgba(255, 255, 255, .78); }
+
+/* 4 colunas para o bento fechar simétrico: dois cards largos (o 1º e o
+   último) e quatro normais preenchem duas fileiras exatas. */
+.servicos-grid { grid-template-columns: repeat(4, 1fr); }
+
+.servicos .card {
+  background: rgba(255, 255, 255, .055);
+  border: 1px solid rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.servicos .card:hover {
+  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 255, 255, .24);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .38);
+}
+.servicos .card h3 { color: var(--white); }
+.servicos .card p { color: rgba(255, 255, 255, .76); }
+
+.servicos .card-icon {
+  background: linear-gradient(135deg, var(--brand) 0%, #4b86e8 100%);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(40, 95, 194, .38);
+}
+
+/* Os dois cards largos: ícone ao lado do texto, não em cima. Empilhado, o
+   texto curto deixava um vazio grande no rodapé, porque o card estica até a
+   altura da fileira. Na horizontal a largura extra é usada de fato. */
+/* Grid e não flex: o ícone, o h3 e o p são irmãos no HTML, e flex-row
+   colocaria os três lado a lado. Aqui o ícone ocupa a coluna 1 nas duas
+   linhas, e o texto empilha na coluna 2 — sem mexer na marcação. */
+.servicos .card-destaque {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: clamp(1.1rem, 2.2vw, 1.5rem);
+  align-content: center;
+}
+.servicos .card-destaque .card-icon {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  font-size: 1.6rem;
+  margin-bottom: 0;
+  grid-row: 1 / span 2;
+}
+.servicos .card-destaque h3 { margin-bottom: .35rem; }
+.servicos .card-destaque h3 { font-size: clamp(1.25rem, 2.2vw, 1.6rem); }
+.servicos .card-destaque p { font-size: 1rem; }
+
+/* Botão claro: o azul da marca sobre a faixa escura sumiria. */
+.servicos .btn-primary { background: var(--white); color: var(--brand-dark); }
+.servicos .btn-primary:hover { background: var(--brand-soft); color: var(--brand-dark); }
+
+@media (max-width: 1024px) {
+  .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .servicos-grid { grid-template-columns: 1fr; }
+  .servicos .card-destaque { grid-column: auto; }
+}
+
+/* ---------- Entrada do hero ---------- */
+/* O hero já está na tela quando a página abre, então não entra no
+   revelar.js (que só reage a scroll): aqui a entrada é no carregamento.
+   CSS puro de propósito — não depende de JS pra nada. O `backwards`
+   segura o estado inicial durante o atraso de cada linha. */
+@keyframes hero-entrada {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-eyebrow,
+.hero h1,
+.hero-lead,
+.hero-actions,
+.page-hero h1,
+.page-hero .breadcrumb {
+  animation: hero-entrada .75s cubic-bezier(.22, .61, .36, 1) backwards;
+}
+
+/* Cascata: cada linha entra logo depois da anterior. */
+.hero-eyebrow, .page-hero h1        { animation-delay: .05s; }
+.hero h1, .page-hero .breadcrumb    { animation-delay: .17s; }
+.hero-lead                          { animation-delay: .29s; }
+.hero-actions                       { animation-delay: .41s; }
+
+/* ---------- Revelação ao rolar ---------- */
+/* A classe .revelar é aplicada por js/revelar.js, nunca no HTML: sem JS,
+   nenhum destes blocos chega a ficar invisível. */
+.revelar {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22, .61, .36, 1);
+  transition-delay: var(--revelar-atraso, 0ms);
+}
+.revelar.revelado {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
+  /* Cinto e suspensório: o JS já nem aplica .revelar aqui. */
+  .revelar { opacity: 1; transform: none; }
 }

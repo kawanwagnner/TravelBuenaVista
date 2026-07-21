@@ -83,44 +83,51 @@
         </div>
     </section>
 
-    <section>
+    <section class="servicos">
         <div class="wrap">
             <div class="section-head center">
                 <span class="eyebrow">O que fazemos</span>
                 <h2>Tudo resolvido em um lugar só</h2>
-                <p>Você fala o que quer viver. A gente cuida de cada detalhe até o embarque.</p>
+                <p>Você diz o que quer viver; a gente monta, ajusta e acompanha. Tem cliente no terceiro ano
+                    consecutivo viajando com a TravelBuenaVista.</p>
             </div>
 
-            <div class="grid grid-3">
-                <div class="card">
+            <div class="grid servicos-grid">
+                <div class="card card-destaque">
                     <div class="card-icon"><i class="fa fa-suitcase-rolling"></i></div>
                     <h3>Pacotes nacionais e internacionais</h3>
-                    <p>Voo, hospedagem e passeios num pacote só, com o roteiro ajustado ao seu ritmo.</p>
+                    <p>Voo, hospedagem e passeios fechados de uma vez — e refeitos quantas vezes precisar, até o
+                        roteiro ficar do seu jeito.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon"><i class="fa fa-hotel"></i></div>
                     <h3>Resorts e hotéis</h3>
-                    <p>Seleção de hospedagem pelo que importa pra você: localização, estrutura ou sossego.</p>
+                    <p>De resort em Cancún a hotel em Londres. A escolha começa por uma pergunta: você quer
+                        estrutura, localização ou sossego?</p>
                 </div>
                 <div class="card">
                     <div class="card-icon"><i class="fa fa-ship"></i></div>
                     <h3>Cruzeiros</h3>
-                    <p>Vários destinos numa viagem só, com tudo organizado antes de você subir a bordo.</p>
+                    <p>Vários destinos sem desfazer a mala uma vez sequer. Cabine, embarque e passeios em terra
+                        resolvidos antes de você subir a bordo.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon"><i class="fa fa-plane-departure"></i></div>
                     <h3>Aéreo nacional e internacional</h3>
-                    <p>Busca de melhores rotas e tarifas, com conexões que fazem sentido de verdade.</p>
+                    <p>Conexão de madrugada sai barata na tela e cara na viagem. Comparamos rota e tarifa levando as
+                        duas coisas em conta.</p>
                 </div>
                 <div class="card">
                     <div class="card-icon"><i class="fa fa-tree"></i></div>
                     <h3>Pousadas</h3>
-                    <p>Hospedagem com jeito de casa para quem quer contato de perto com o destino.</p>
+                    <p>Para quem prefere o destino ao lobby do hotel: hospedagem menor, com jeito de casa e gente da
+                        região por perto.</p>
                 </div>
-                <div class="card">
+                <div class="card card-destaque">
                     <div class="card-icon"><i class="fa fa-users"></i></div>
                     <h3>Excursões</h3>
-                    <p>Viagens em grupo acompanhadas, com guia da Travel Buena Vista do início ao fim.</p>
+                    <p>Grupo acompanhado pelo Thiago do embarque à volta — a mesma pessoa que montou o roteiro
+                        está no aeroporto com você.</p>
                 </div>
             </div>
 
@@ -213,13 +220,8 @@
                         <p class="help-block"></p>
                     </div>
                     <div class="field">
-                        <label for="destination">Para onde você quer ir?</label>
-                        <input type="text" id="destination" name="destination" placeholder="Ex.: Cancún em julho" required>
-                        <p class="help-block"></p>
-                    </div>
-                    <div class="field">
-                        <label for="quest">Conte um pouco mais</label>
-                        <textarea id="quest" name="quest" placeholder="Quantas pessoas, datas aproximadas, o que não pode faltar..." required></textarea>
+                        <label for="quest">Para onde você quer ir?</label>
+                        <textarea id="quest" name="quest" placeholder="Ex.: Cancún em julho, 2 adultos e 1 criança — e o que não pode faltar." required></textarea>
                         <p class="help-block"></p>
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Quero meu orçamento</button>
@@ -306,6 +308,7 @@
         })();
     </script>
     <script defer src="js/carrossel.js"></script>
+    <script defer src="js/revelar.js"></script>
     <script defer src="js/form.js"></script>
 </body>
 

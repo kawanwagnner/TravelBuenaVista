@@ -29,12 +29,18 @@
   var AVISO_DEMORA_MS = 6000;
   var TIMEOUT_MS = 45000;
 
+  // Os campos "destination" e "quest" eram separados e viraram um só: pedir o
+  // destino e "conte um pouco mais" em caixas diferentes fazia a pessoa repetir
+  // a mesma informação. Agora é um campo livre.
+  //
+  // ATENÇÃO ao religar MODO = "backend": o payload não tem mais a chave
+  // "destination". Se a API a exigir, é preciso ajustá-la ou remontar a chave
+  // aqui antes do envio.
   var CAMPOS = [
     { id: "nome", rotulo: "Nome", label: "seu nome" },
     { id: "email", rotulo: "E-mail", label: "seu e-mail", email: true },
     { id: "zap", rotulo: "WhatsApp", label: "seu WhatsApp" },
-    { id: "destination", rotulo: "Destino de interesse", label: "o destino de interesse" },
-    { id: "quest", rotulo: "Mensagem", label: "sua mensagem" }
+    { id: "quest", rotulo: "Viagem", label: "para onde você quer ir" }
   ];
 
   /* ---------------------------------------------------------------- modal */

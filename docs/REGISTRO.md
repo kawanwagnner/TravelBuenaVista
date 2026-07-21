@@ -17,6 +17,131 @@ pendências listadas no fim deste documento.
 141 arquivos alterados · 3.657 linhas adicionadas · 7.762 removidas
 ```
 
+### ⚠️ Trabalho em andamento, ainda NÃO commitado
+
+Há alterações na árvore de trabalho, em cima de `667e950`. **Um `git checkout`
+descuidado perde tudo isto.** Sugestão ao retomar: conferir com `git status` e
+commitar antes de qualquer outra coisa.
+
+| Arquivo | Situação |
+|---|---|
+| `img/thiago-guia.jpeg` | novo (não rastreado) |
+| `img/thiago-guia.webp` | **apagado** |
+| `img/ceu-floresta.webp` | modificado (imagem nova, mesmo caminho) |
+| `js/revelar.js` | novo (não rastreado) |
+| `js/form.js` | modificado |
+| `css/redesign.css` | modificado |
+| as 9 páginas `.html` | modificadas |
+
+O que foi feito, em três frentes:
+
+**1. Foto do guia trocada.** A foto antiga (só o Thiago) saiu; entrou uma foto
+de família fornecida pela agência, movida da raiz do repo para
+`img/thiago-guia.jpeg`. Referências atualizadas em `about.html`, `guide.html` e
+`blog.html`. Dois ajustes de enquadramento foram necessários:
+
+- `object-position: 50% 40%` no `.person-media img` — o card é 1:1 e a foto é
+  3:4, e o corte central cortava o rosto de quem está no topo;
+- `max-width: 340px` + `margin-inline: auto` no `.person` — o `.grid-3` usa
+  `repeat(auto-fit, minmax(280px, 1fr))`, então **com um guia só a coluna virava
+  a largura inteira da página** e a foto ficava gigante. Era um problema
+  pré-existente, que a foto nova só tornou visível.
+
+**2. Animações.** Não havia nenhuma — verificado que a versão pré-redesign
+(`21ec485^`) também não tinha, então não foi regressão.
+
+- `js/revelar.js` (novo): entrada ao rolar via `IntersectionObserver`, nas 9
+  páginas. Sobe 18px + fade de 0,55s, com 90ms de escalonamento entre cards da
+  mesma fileira. Revela uma vez e solta o elemento.
+- Entrada do hero em cascata no carregamento, em CSS puro (`@keyframes
+  hero-entrada`). Separado do scroll reveal de propósito: o hero já está na tela
+  quando a página abre, então nunca dispararia por scroll.
+
+  **Decisão que vale preservar:** a classe `.revelar` é aplicada pelo JS, nunca
+  escrita no HTML. O padrão comum — esconder tudo no CSS e o JS revelar — faz a
+  página inteira sumir se o script falhar. Do jeito atual, falha custa só a
+  animação. Esse caso está coberto por teste.
+
+**3. Seção Serviços — visual e copy** (`index.html` + `service.html`, bloco
+duplicado nos dois).
+
+O diagnóstico do visual: na home, essa seção fica **entre duas seções cheias de
+foto** (grade de destinos acima, "Sobre" abaixo). Era a única parede de caixas
+brancas no meio disso — lia como genérica por falta de contraste com a
+vizinhança, não por causa do card em si. Encher de foto também resolveria
+errado: viraria sopa de imagem, sem respiro.
+
+Virou **faixa escura com bento**: fundo azul-marca profundo, cards em vidro
+translúcido, e dois cards largos (Pacotes e Excursões) ocupando 2 das 4 colunas.
+Nesses dois o ícone fica ao lado do texto em vez de em cima — empilhado, o texto
+curto deixava um vazio grande no rodapé, já que o card estica até a altura da
+fileira.
+
+Tudo escopado em `.servicos`: a classe `.card` também é usada em `about.html` e
+`destination.html` e não podia mudar.
+
+> **Registrado porque quase deu errado:** o acervo em `img/travelBuena-photos/`
+> parece uma mina de fotos reais, mas não serve para layout. `Cancun.webp` é um
+> print de grade do Instagram, com logo; `Cruzeiro.webp` é um snapshot escuro e
+> desfocado. Só `img/pacotes/` tem qualidade de publicação. Um layout com foto
+> grande usando aquela pasta ficaria **pior** que os cards brancos.
+
+A copy dos seis cards também foi reescrita (a pedido, numa rodada anterior):
+descreviam categorias que qualquer agência publicaria igual. Agora têm
+especificidade ancorada no que o site já afirma — o `<h2>` do blog é "Destinos
+que já levamos gente", então Cancún, Londres e Grécia são viagens reais.
+
+**4. Faixa escura no CTA e fusão de dois campos do formulário.**
+
+O `.cta` passou a usar o mesmo fundo escuro da seção de serviços. **A definição
+está numa regra só** (`.faixa-escura, .servicos, .cta`) — duas cópias do mesmo
+gradiente divergem com o tempo, que é exatamente como o site acabou com dois
+telefones diferentes.
+
+Os campos "Para onde você quer ir?" (input) e "Conte um pouco mais" (textarea)
+viraram **um único textarea** `#quest`, nas 9 páginas: pedir destino e detalhes
+em caixas separadas fazia a pessoa repetir a mesma informação. O formulário foi
+de 5 para 4 campos.
+
+> **Dívida criada:** o payload do backend **não tem mais a chave
+> `destination`**. Está comentado no topo de `js/form.js`, junto da constante
+> `MODO`. Se alguém religar `MODO = "backend"` sem ler isso, e a API exigir o
+> campo, o envio quebra. Hoje não afeta ninguém porque o modo é `"whatsapp"`.
+
+**5. Imagem do hero das páginas internas trocada.** Entrou uma foto de barco
+em rio entre falésias, no lugar da anterior. Convertida de PNG para webp:
+**2.950 KB → 259 KB** (91% menor, e menor que os 280 KB da imagem antiga).
+
+Salva em `img/ceu-floresta.webp`, o mesmo caminho de antes — as 8 páginas
+internas referenciam esse nome em `style="background-image: ..."` e voltaram a
+funcionar sem edição. Isso corrigiu um problema que existia no meio do caminho:
+com o `.webp` renomeado à mão e só o `.png` na pasta, **o hero das 8 páginas
+estava quebrado**.
+
+O enquadramento precisou de ajuste (`css/redesign.css`, `.page-hero`): o hero é
+uma faixa de ~250px, então o `cover` mostra só uma banda estreita da foto.
+Centralizado sobrava a parte escura do meio, e a água e o barco ficavam fora do
+corte — passou a `center 72%`.
+
+Os arquivos `img/ceu-floresta.png` (2,9 MB) e `img/ceu-floresta-.webp` foram
+apagados a pedido. Nada se perdeu: o segundo era a imagem antiga renomeada, e
+foi confirmado por `git hash-object` que é byte a byte idêntica à versão em
+`HEAD` — recuperável com `git checkout HEAD -- img/ceu-floresta.webp`.
+
+> **Como converter imagem neste repo.** Não há `cwebp` nem ImageMagick nesta
+> máquina. A conversão foi feita pelo encoder WebP do próprio Chromium, via
+> Playwright: carrega a imagem, desenha num `<canvas>` e exporta com
+> `canvas.toDataURL('image/webp', qualidade)`. Foram testadas as qualidades
+> 0,72 / 0,80 / 0,85 / 0,90 e escolhida a **0,72** — indistinguível do original
+> na escala em que a imagem é exibida, ainda mais por ser fundo atrás de
+> sobreposição escura. O encoder do Chromium rende menos que o `cwebp`, então
+> quem tiver `cwebp` à mão consegue arquivo menor com a mesma qualidade.
+
+> **Duas frases foram inferidas e precisam de confirmação da agência antes de
+> publicar** — estão detalhadas em Pendências. É o mesmo tipo de erro
+> registrado nos commits `5a644d3` e `21ec485`: conteúdo plausível que ninguém
+> da agência disse.
+
 ---
 
 ## O site hoje (na branch)
@@ -31,6 +156,7 @@ removidos. O que roda é:
 |---|---|
 | `css/redesign.css` | Design system inteiro (~15KB) |
 | `js/carrossel.js` | Carrossel genérico (hero + depoimentos) |
+| `js/revelar.js` | Entrada ao rolar (não commitado — ver "Onde paramos") |
 | `js/form.js` | Formulário de lead |
 | inline (~15 linhas) | Menu mobile |
 
@@ -204,6 +330,21 @@ backend preservado atrás de uma flag.
 
 ### Precisam de informação da agência
 
+- [ ] **Confirmar duas frases da nova copy de Serviços.** Ambas em `index.html`
+      e `service.html`, e ambas inferidas — não vieram da agência:
+      1. *"De resort em Cancún a hotel em Londres"* — o blog confirma que
+         levaram gente aos dois destinos, mas **não** diz o tipo de hospedagem.
+         O "resort" e o "hotel" são suposição.
+      2. *"a mesma pessoa que montou o roteiro está no aeroporto com você"*
+         (card Excursões) — deduzido do cargo do Thiago, "Guia e consultor de
+         viagens". Se as excursões usam guia terceirizado, ou se há mais de um
+         guia, a frase é falsa.
+
+      A terceira afirmação nova — *"cliente no terceiro ano consecutivo"* — é
+      citação direta do depoimento real da Andreia e está sólida.
+- [ ] **Confirmar se a foto de família é mesmo a foto do card do guia.** O card
+      diz "Thiago Ribeiro — Guia e consultor de viagens", mas a imagem mostra
+      quatro pessoas. Se a intenção era só ele, o certo é recortar a foto.
 - [ ] **Dados reais dos pacotes** (nome, duração, preço). Hoje os cards são uma
       vitrine visual que leva ao orçamento, sem metadado nenhum — porque o site
       original também não tem. Com os dados reais, viram cards de produto.
@@ -229,6 +370,13 @@ backend preservado atrás de uma flag.
 
 ### Técnicas, sem urgência
 
+- [ ] **Converter `img/thiago-guia.jpeg` para webp.** Está com **152 KB**; a
+      foto que ela substituiu tinha 25 KB. São 6× mais peso num card com
+      `loading="lazy"`. **Já existe método pronto para isso** — o mesmo usado no
+      `ceu-floresta` (encoder do Chromium via Playwright, descrito em "Onde
+      paramos"). Depois é só trocar a extensão nas 3 referências
+      (`about.html`, `guide.html`, `blog.html`). Ficou pendente só porque não
+      foi pedido junto.
 - [ ] **Manutenção do HTML repetido.** Cabeçalho e rodapé voltaram a estar
       duplicados em 9 arquivos — o gerador rodou uma vez e não está no repo.
       Trocar um item de menu hoje = editar 9 arquivos. Duas saídas: versionar o
@@ -261,6 +409,36 @@ A verificação foi feita com Puppeteer, cobrindo:
 | Contraste | razão WCAG em cada ponto de texto |
 
 Estado na última execução: **todas passando.**
+
+As animações (trabalho não commitado) foram verificadas com Playwright, não com
+Puppeteer — o Puppeteer não tem emulação de `prefers-reduced-motion`. Quatro
+cenários, todos passando:
+
+| Cenário | Resultado |
+|---|---|
+| 9 páginas, rolagem até o fim | 0 elementos presos invisíveis, 0 erros de console |
+| `prefers-reduced-motion: reduce` | 0 elementos animados |
+| `revelar.js` bloqueado no carregamento | 6/6 cards visíveis — nada some |
+| Carrossel | 0 elementos marcados dentro dele, bolinhas intactas |
+
+E, para a fusão dos campos do formulário:
+
+| Cenário | Resultado |
+|---|---|
+| Estrutura nas 9 páginas | 4 campos, sem `#destination`, 0 erros de console |
+| Envio ponta a ponta | mensagem do WhatsApp sem campo duplicado (`*Viagem:*`) |
+| Validação do campo novo | mensagem correta e **botão não trava** |
+| Contraste do card branco sobre a faixa nova | overrides do `8e063f1` intactos |
+
+O teste do botão travado existe porque esse bug já aconteceu neste projeto
+(commit `d4bff8b`). Vale manter em qualquer mexida futura no formulário.
+
+O terceiro cenário é o que importa preservar: ele prova que uma falha do script
+não esconde conteúdo. Se alguém reescrever o reveal no futuro, esse teste é o
+que impede a regressão.
+
+> Nota: esses scripts também rodaram em pasta temporária e **não foram
+> versionados** — mesma pendência já registrada acima.
 
 > Nota: os testes de formulário rodam com a rede interceptada — nenhum e-mail é
 > enviado para a agência durante a verificação. O envio real de ponta a ponta
