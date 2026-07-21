@@ -857,3 +857,14 @@ section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
   /* Cinto e suspensório: o JS já nem aplica .revelar aqui. */
   .revelar { opacity: 1; transform: none; }
 }
+
+/* Atribuicao das fotos de destino - exigencia das licencas CC BY / CC BY-SA
+   das imagens do Wikimedia Commons. Fica no redesign.css porque aparece no
+   rodape de varias paginas; um arquivo .md escondido nao cumpre a licenca. */
+.footer-creditos {
+  display: block;
+  margin-top: .5rem;
+  font-size: .78rem;
+  opacity: .75;
+}
+.footer-creditos a { text-decoration: underline; }

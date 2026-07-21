@@ -8,3 +8,9 @@ docs/
 scss/
 serve.py
 .vscode/
+
+# Os JPG de 1800px baixados do Commons são ARQUIVO-FONTE das fotos.
+# O navegador recebe só os .webp gerados a partir deles (1400px para os
+# painéis da home, -sm de 700px para os cards de destinos). Publicar os
+# JPG somaria 5,7 MB inúteis — e a conta é de plano gratuito.
+img/xp/*.jpg
