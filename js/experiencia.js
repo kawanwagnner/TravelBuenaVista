@@ -250,19 +250,52 @@
   (function shader() {
     const canvas = document.querySelector('[data-shader]');
     if (!canvas) return;
-    const gl = canvas.getContext('webgl', { antialias: true });
-    if (!gl) return;                                  // sem WebGL: fundo branco liso
+
+    /* Um <canvas> que não consegue alocar o contexto vira ÍCONE DE IMAGEM
+       QUEBRADA no Chrome Android — foi exatamente o que apareceu no hero no
+       celular. Então TODA desistência daqui pra baixo tem que tirar o
+       elemento do DOM. O .xp-hero--liso repõe um degradê da marca no lugar,
+       para o hero não virar um retângulo branco. */
+    let morto = false;
+    const desistir = () => {
+      morto = true;
+      canvas.closest('.xp-hero')?.classList.add('xp-hero--liso');
+      canvas.remove();
+    };
+
+    const celular = matchMedia('(pointer: coarse)').matches;
+
+    /* Buffer enxuto: é um quad de tela cheia, não precisa de antialias,
+       profundidade nem stencil — e cada um desses é memória de GPU que no
+       celular faz falta. `alpha:false` ainda evita a composição extra. */
+    const attrs = {
+      alpha: false, antialias: false, depth: false, stencil: false,
+      preserveDrawingBuffer: false, powerPreference: celular ? 'low-power' : 'default'
+    };
+    const gl = canvas.getContext('webgl', attrs) || canvas.getContext('experimental-webgl', attrs);
+    if (!gl) return desistir();                       // sem WebGL: degradê de CSS
+
+    // contexto perdido (aba em segundo plano, GPU reiniciada): some com o canvas
+    canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); desistir(); });
+
+    /* Nem toda GPU de celular tem `highp` no fragment shader. Pedir mesmo
+       assim faz o shader NÃO COMPILAR — e aí o hero ficava sem nada. */
+    const alta = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
+    const precisao = alta && alta.precision > 0 ? 'highp' : 'mediump';
+
+    // fill rate é o gargalo no celular: uma oitava a menos e ninguém percebe
+    const OITAVAS = celular ? 4 : 5;
 
     const VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
     const FRAG = `
-      precision highp float;
+      precision ${precisao} float;
       uniform vec2 u_res; uniform float u_time; uniform vec2 u_mouse;
       float hash(vec2 p){ p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }
       float noise(vec2 p){
         vec2 i=floor(p), f=fract(p); vec2 u=f*f*(3.-2.*f);
         return mix(mix(hash(i),hash(i+vec2(1,0)),u.x), mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x), u.y);
       }
-      float fbm(vec2 p){ float v=0.,a=.5; for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.; a*=.5; } return v; }
+      float fbm(vec2 p){ float v=0.,a=.5; for(int i=0;i<${OITAVAS};i++){ v+=a*noise(p); p*=2.; a*=.5; } return v; }
       void main(){
         vec2 uv = gl_FragCoord.xy/u_res.xy;
         // Normaliza pelo MENOR lado. Escalar por aspect deixava o padrão
@@ -303,10 +336,17 @@
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn(gl.getShaderInfoLog(s)); return null; }
       return s;
     }
+    const vs = compilar(gl.VERTEX_SHADER, VERT);
+    const fs = compilar(gl.FRAGMENT_SHADER, FRAG);
+    // sem os dois shaders, attachShader estoura — melhor cair fora limpo
+    if (!vs || !fs) return desistir();
+
     const prog = gl.createProgram();
-    gl.attachShader(prog, compilar(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compilar(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog); gl.useProgram(prog);
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(prog)); return desistir(); }
+    gl.useProgram(prog);
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -319,14 +359,32 @@
     const uTime = gl.getUniformLocation(prog, 'u_time');
     const uMouse = gl.getUniformLocation(prog, 'u_mouse');
 
+    /* No celular a barra de URL entra e sai o tempo todo e cada evento desses
+       é um `resize`. Realocar o buffer da GPU a cada um é justamente o que
+       derruba o contexto em aparelho apertado de memória — daí o ícone de
+       imagem quebrada. Então: dpr menor no toque, e só realoca quando a
+       LARGURA muda de verdade (mudança só de altura = barra de URL). */
+    let larguraAnterior = 0;
     function redimensionar() {
-      const dpr = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = canvas.clientWidth * dpr;
-      canvas.height = canvas.clientHeight * dpr;
+      if (morto) return;
+      const l = canvas.clientWidth, a = canvas.clientHeight;
+      if (!l || !a) return;
+      if (l === larguraAnterior) return;
+      larguraAnterior = l;
+
+      /* No celular o buffer é desenhado PEQUENO e o CSS estica de volta. Como
+         a imagem é fluido borrado, a subida de escala não aparece — mas o
+         custo cai ~6x, que é o que faz a diferença entre rodar e a GPU
+         derrubar o contexto. Teto no lado maior; o menor segue a proporção. */
+      const dpr = Math.min(devicePixelRatio || 1, celular ? 1.5 : 2);
+      const escala = celular ? Math.min(1, 900 / (Math.max(l, a) * dpr)) : 1;
+      canvas.width = Math.max(1, Math.round(l * dpr * escala));
+      canvas.height = Math.max(1, Math.round(a * dpr * escala));
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(uRes, canvas.width, canvas.height);
     }
     addEventListener('resize', redimensionar); redimensionar();
+    if (gl.isContextLost()) return desistir();
 
     let mx = .5, my = .5, tx = .5, ty = .5;
     addEventListener('mousemove', e => {
@@ -341,13 +399,31 @@
       if (visivel && !raf) loop(0);
     }).observe(canvas);
 
+    /* Vigia de desempenho: em vez de adivinhar pelo user-agent quais aparelhos
+       aguentam, a gente MEDE. Se depois do aquecimento o shader passar mais de
+       um segundo abaixo de 10fps, ele sai de cena e entra o degradê — melhor
+       um fundo estático bonito que um hero travando o scroll. */
+    const ALVO = celular ? 33 : 0;      // ms entre quadros (celular trava em 30fps)
+    let ultimo = 0, medidos = 0, lentos = 0;
+
     function loop(ts) {
-      if (!visivel) { raf = null; return; }
+      if (morto || !visivel) { raf = null; return; }
+      raf = semMovimento ? null : requestAnimationFrame(loop);
+
+      const dt = ultimo ? ts - ultimo : 0;
+      if (ALVO && dt && dt < ALVO) return;             // pula o quadro: 30fps
+      ultimo = ts;
+
+      // os 20 primeiros quadros são compilação/upload — não contam
+      if (dt > 0 && ++medidos > 20) {
+        if (dt > 100) lentos++; else lentos = 0;
+        if (lentos >= 12) return desistir();           // ~1,2s seguidos abaixo de 10fps
+      }
+
       mx += (tx - mx) * .05; my += (ty - my) * .05;
       gl.uniform2f(uMouse, mx, my);
       gl.uniform1f(uTime, semMovimento ? 6 : ts * .001);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      raf = semMovimento ? null : requestAnimationFrame(loop);
     }
     loop(0);
   })();
