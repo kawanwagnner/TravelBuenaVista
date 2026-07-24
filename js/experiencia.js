@@ -220,20 +220,25 @@
 
     if (semMovimento) { porNaRota(.62); aviao.style.opacity = 1; return; }
 
+    /* No celular o viewBox é cortado pelo "slice": boa parte do arco fica fora
+       da tela e o avião some por vários segundos. Com a tela estreita o voo
+       roda mais rápido e espera menos entre uma passagem e outra. */
+    const estreito = matchMedia('(max-width: 700px)').matches;
+
     // 1. a rota se desenha
     rota.style.strokeDasharray = `${total}`;
     rota.style.strokeDashoffset = `${total}`;
     gsap.to(rota, {
-      strokeDashoffset: 0, duration: 2.4, ease: 'power2.inOut', delay: .35,
+      strokeDashoffset: 0, duration: estreito ? 1.5 : 2.4, ease: 'power2.inOut', delay: .35,
       onComplete: () => { rota.style.strokeDasharray = '1 12'; rota.style.strokeDashoffset = '0'; }
     });
 
     // 2. o avião decola e cruza, em loop lento
     const voo = { p: 0 };
-    gsap.timeline({ repeat: -1, repeatDelay: 1.4, delay: 1.1 })
+    gsap.timeline({ repeat: -1, repeatDelay: estreito ? .8 : 1.4, delay: estreito ? .7 : 1.1 })
       .set(aviao, { opacity: 1 })
       .to(voo, {
-        p: 1, duration: 9, ease: 'power1.inOut',
+        p: 1, duration: estreito ? 4.5 : 9, ease: 'power1.inOut',
         onUpdate: () => porNaRota(voo.p)
       })
       .to(aviao, { opacity: 0, duration: .5 }, '-=0.5')
