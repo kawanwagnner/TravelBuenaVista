@@ -1,29 +1,44 @@
 # TravelBuenaVista — registro do trabalho
 
-Documento de acompanhamento da reforma do site. Última atualização: 20/07/2026.
+Documento de acompanhamento da reforma do site. Última atualização: 24/07/2026.
 
 ---
 
 ## Onde paramos
 
-Toda a reforma está na branch **`melhorias-2026`**, com 10 commits.
-**Nada foi publicado** — o que está no ar em <https://travel-buena-vista.vercel.app/>
-ainda é a versão antiga.
+**A reforma foi publicada.** O que está no ar em
+<https://travel-buena-vista.vercel.app/> é a `main`, que a Vercel publica a cada
+push. A branch `melhorias-2026` cumpriu o papel e não é mais a fonte da verdade.
 
-Falta decidir: publicar (via preview da Vercel primeiro) e resolver as
-pendências listadas no fim deste documento.
+As pendências no fim deste documento continuam valendo — publicar não resolveu
+nenhuma delas.
+
+### ⚠️ Este registro tem um buraco
+
+A linha do tempo abaixo documenta em detalhe os commits **1 a 10** (até
+`6268d93`) e o **11** (`e4dd5cb`). Os seis do meio entraram sem registro aqui:
 
 ```
-141 arquivos alterados · 3.657 linhas adicionadas · 7.762 removidas
+70e7351  chore: consolida ajustes de conteudo e CSS que estavam sem commit
+5d3cc1b  feat: redesign imersivo da home (awwwards-kit)
+8921fc6  chore: ignora artefatos do Vercel e tira dev do deploy
+7d15b57  perf: leva as fotos novas para destinos/pacotes e otimiza tudo em WebP
+0caac57  copy: reescreve o bloco "Quem somos"
+e699f38  copy: tira excursoes e a narrativa de guia acompanhante
 ```
 
-### ⚠️ Trabalho em andamento, ainda NÃO commitado
+O `5d3cc1b` é o mais importante do lote: é ele que traz o hero em WebGL da home
+(`css/experiencia.css` + `js/experiencia.js`), que o commit 11 conserta. Quem
+retomar o projeto e precisar do contexto dessas seis mudanças vai ter que ler o
+diff — não está escrito em lugar nenhum.
 
-Há alterações na árvore de trabalho, em cima de `667e950`. **Um `git checkout`
-descuidado perde tudo isto.** Sugestão ao retomar: conferir com `git status` e
-commitar antes de qualquer outra coisa.
+### Trabalho que estava solto, e entrou em `70e7351`
 
-| Arquivo | Situação |
+O que segue estava na árvore de trabalho sem commit quando este documento foi
+escrito. **Já está commitado** — o relato fica porque explica *por quê* de cada
+decisão, e isso o diff não conta.
+
+| Arquivo | Situação naquele momento |
 |---|---|
 | `img/thiago-guia.jpeg` | novo (não rastreado) |
 | `img/thiago-guia.webp` | **apagado** |
@@ -144,21 +159,33 @@ foi confirmado por `git hash-object` que é byte a byte idêntica à versão em
 
 ---
 
-## O site hoje (na branch)
+## O site hoje (em produção)
 
 **9 páginas:** `index`, `about`, `service`, `package`, `destination`,
 `guide`, `blog`, `testimonial`, `contact`.
 
-**Front-end sem framework.** Bootstrap, jQuery, owl.carousel e easing foram
-removidos. O que roda é:
+**Front-end sem framework** — com uma exceção, a home. Bootstrap, jQuery,
+owl.carousel e easing foram removidos. O que roda nas páginas internas:
 
 | Arquivo | O que faz |
 |---|---|
 | `css/redesign.css` | Design system inteiro (~15KB) |
 | `js/carrossel.js` | Carrossel genérico (hero + depoimentos) |
-| `js/revelar.js` | Entrada ao rolar (não commitado — ver "Onde paramos") |
+| `js/revelar.js` | Entrada ao rolar |
 | `js/form.js` | Formulário de lead |
 | inline (~15 linhas) | Menu mobile |
+
+**A home e a `experiencia.html` são o caso à parte.** Desde o `5d3cc1b` elas
+usam outra pilha, carregada de CDN: GSAP + ScrollTrigger, Lenis e SplitType,
+mais `css/experiencia.css` e `js/experiencia.js`. É aqui que vive o hero em
+WebGL. Vale saber de duas coisas antes de mexer:
+
+- **Quatro dependências de CDN.** Se a `gsap` não carregar, o `experiencia.js`
+  desiste logo na primeira linha (`if (!window.gsap) return`) e a home perde
+  todo o movimento de uma vez. Nenhuma outra página depende de rede para
+  funcionar.
+- **O shader é o ponto frágil.** Ver commit 11 na linha do tempo: ele tem quatro
+  caminhos de desistência e todos caem no mesmo degradê de CSS.
 
 **Contatos padronizados:** um único telefone `(11) 97673-2628` e um único
 e-mail `contato@tbvtagencia.com` em todas as páginas.
@@ -286,6 +313,43 @@ O hero antigo tinha **2 slides** e eu havia mantido só o primeiro:
 O sobretítulo "Passeios & viagens" também voltou. O JS do carrossel, que estava
 copiado inline em 6 páginas, virou `js/carrossel.js`.
 
+> Entre este commit e o próximo há **seis commits sem registro** — listados em
+> "Onde paramos". O `5d3cc1b`, que trouxe o hero em WebGL, é o que dá contexto
+> ao commit 11.
+
+### 11. `e4dd5cb` — hero em WebGL quebrado no celular
+
+**Sintoma:** no Chrome Android o hero da home mostrava um **ícone de imagem
+quebrada** no canto superior esquerdo. No desktop, e até no emulador de
+dispositivo do DevTools, estava perfeito — o que é a assinatura de um problema
+de GPU, não de layout.
+
+Não havia `<img>` nenhum ali. Era o `<canvas>` do shader: quando o WebGL não
+sobe, o Chrome pinta o placeholder de imagem quebrada no lugar do canvas. O
+código só fazia `return` e deixava o elemento morto no DOM.
+
+**Conserto em duas camadas.** A primeira é desistir direito: toda saída agora
+remove o canvas e marca o hero com `.xp-hero--liso`, um degradê estático na
+paleta da marca. Cobre WebGL ausente, shader que não compila, link que falha e
+contexto perdido.
+
+A segunda é não precisar desistir. O shader estava dimensionado para desktop:
+
+| O que estava errado | Por quê |
+|---|---|
+| `precision highp float` fixo | Muita GPU de Android não tem `highp` no fragment shader — nessas, o shader **não compila**. Agora pergunta com `getShaderPrecisionFormat` e cai para `mediump`. |
+| Buffer em `devicePixelRatio` cheio | Num celular com dpr 3 são ~2,4 milhões de pixels por quadro. Limitado a 900px no lado maior; o CSS estica de volta e, sendo fluido borrado, não dá para ver. |
+| `antialias`, `depth`, `stencil` ligados | Inúteis num quad de tela cheia, e cada um é memória de GPU. |
+| 5 oitavas de `fbm` | Fill rate é o gargalo no celular. São 4 lá. |
+| `resize` realocando a GPU | A barra de URL do Chrome Android dispara `resize` a cada scroll. Agora só realoca quando a **largura** muda. |
+| Sem teto de frame rate | 30fps travados no celular. Menos quadro para desenhar sobra GPU para o scroll do Lenis. |
+
+**A decisão que vale preservar:** em vez de adivinhar por user-agent quais
+aparelhos aguentam, o loop **mede**. Passou de ~1s abaixo de 10fps, o shader sai
+de cena e entra o degradê. Lista de user-agent envelhece e mente; medição, não.
+
+Verificado num aparelho real: a fumaça roda e o scroll não trava.
+
 ---
 
 ## Bugs que só apareceram porque foram testados
@@ -306,6 +370,22 @@ Vale registrar: nenhum destes apareceria em captura de tela ou revisão visual.
   carrossel em 40px. O `scroll-snap` mascarava rolando para compensar.
 - **`Math.round(1.33)` = 1** gerava uma única bolinha e o autoplay não tinha
   para onde ir.
+
+### E um que nenhum teste pegaria
+
+O hero quebrado do commit 11 é o contrário de todos os de cima: **passou por
+toda a verificação automatizada e pelo emulador de dispositivo do DevTools**, e
+só apareceu quando alguém abriu o site num celular de verdade.
+
+O motivo é que a suíte inteira roda em Chrome de desktop, com GPU de desktop.
+Emular viewport e user-agent não emula GPU: `highp`, limite de memória de
+textura e a barra de URL que dispara `resize` a cada scroll não existem ali.
+Nenhum teste headless razoável cobre isso.
+
+Fica a régua: **animação que depende de GPU precisa de um olho em aparelho
+real**, ou de um caminho de desistência tão bom que o pior caso não importe. O
+commit 11 fez as duas coisas — mas a primeira falha só foi notada porque o
+cliente abriu no celular dele, não porque a verificação avisou.
 
 ---
 
@@ -353,9 +433,9 @@ backend preservado atrás de uma flag.
 
 ### Decisões suas
 
-- [ ] **Publicar.** Sugestão: subir a branch para a Vercel gerar uma URL de
-      preview, testar no celular, mandar para o cliente, e só então promover
-      para produção.
+- [x] ~~**Publicar.**~~ Feito. A `main` é o que está no ar, e a Vercel publica a
+      cada push. Sem etapa de preview no meio — vale saber que **um push errado
+      vai direto para produção**.
 - [ ] **Apagar arquivos órfãos.** `js/main.js`, `css/style.css`, `lib/` e
       `scss/` não são referenciados por nenhuma página — ~800KB de peso morto.
       Não apaguei por conta própria.
@@ -387,16 +467,30 @@ backend preservado atrás de uma flag.
 - [ ] **Registro de leads por e-mail.** Como o site está na Vercel, seria uma
       Vercel Function no mesmo projeto — sem Render e sem cold start. Só faz
       sentido se quiserem histórico além do WhatsApp.
+- [ ] **A home depende de 4 CDNs** (GSAP, ScrollTrigger, Lenis, SplitType). Se
+      a `gsap` não responder, a home inteira perde o movimento — as outras 8
+      páginas não dependem de rede para nada. Baixar para `js/lib/` resolveria,
+      ao custo de manter as versões à mão.
+- [ ] **A verificação não cobre a home nova.** As suítes de Puppeteer e
+      Playwright são anteriores ao `5d3cc1b` e não sabem do scroll horizontal,
+      do shader nem do Lenis. E, como registrado acima, teste headless não pega
+      falha de GPU de qualquer jeito.
+- [ ] **Documentar os seis commits sem registro** listados em "Onde paramos",
+      enquanto alguém ainda lembra do porquê.
 
 ---
 
 ## Como verificar
 
-Servidor local:
+Servidor local — use o `serve.py` do repo, não o `http.server` puro:
 
 ```bash
-python -m http.server 8899 --bind 127.0.0.1
+python serve.py            # porta 5599
 ```
+
+Ele é um `http.server` que manda `no-store` em tudo. Sem isso o Chrome guarda o
+`experiencia.js` em cache e você fica olhando para um bug já corrigido — que é
+exatamente o tipo de perda de tempo que o commit 11 rendeu.
 
 A verificação foi feita com Puppeteer, cobrindo:
 
@@ -410,7 +504,12 @@ A verificação foi feita com Puppeteer, cobrindo:
 
 Estado na última execução: **todas passando.**
 
-As animações (trabalho não commitado) foram verificadas com Playwright, não com
+> ⚠️ **Essa execução é anterior ao `5d3cc1b`.** As suítes não conhecem a home
+> nova — scroll horizontal, Lenis e shader não são exercitados por nenhuma
+> delas, e não foram rodadas de novo desde então. Tratar o "todas passando"
+> como válido para as 8 páginas internas, não para a home.
+
+As animações (o lote que entrou em `70e7351`) foram verificadas com Playwright, não com
 Puppeteer — o Puppeteer não tem emulação de `prefers-reduced-motion`. Quatro
 cenários, todos passando:
 
