@@ -283,7 +283,10 @@
 .xp-fala footer > span:not(.xp-estrelas) { display: flex; flex-direction: column; line-height: 1.35; }
 .xp-fala footer strong { color: var(--ink); font-weight: 600; font-size: 1.02rem; }
 .xp-fala footer span span { font-size: .84rem; color: var(--muted); }
-.xp-fala footer .xp-estrelas { margin-left: auto; }
+/* Junto do autor, não coladas na borda: o footer ocupa a largura toda do
+   wrap, então margin-left:auto jogava as estrelas para o outro lado da
+   tela, longe da fala e do nome. */
+.xp-fala footer .xp-estrelas { margin-left: .4rem; }
 
 /* a segunda vai para a direita — quebra o eixo e cria ritmo na página */
 .xp-fala--direita { text-align: right; }
